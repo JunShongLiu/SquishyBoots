@@ -48,7 +48,7 @@ CREATE TABLE Characters (
     Char_Name         varchar(80),
     Char_Level        int,
     Char_ID            int,
-    PRIMARY KEY(Char_id)
+    PRIMARY KEY(Char_ID)
 );
 
 grant select on Characters to public;
@@ -118,19 +118,19 @@ CREATE TABLE Has(
 grant select on Has to public;
 
 insert into Player
-values('Antipater', 'jun@email.com', 1)
+values('Antipater', 'jun@email.com', 1);
 
 insert into Player
-values('Philippina', 'karen@email.com', 2)
+values('Philippina', 'karen@email.com', 2);
 
 insert into Player
-values('Xoel', 'silas@email.com', 3)
+values('Xoel', 'silas@email.com', 3);
 
 insert into Player
-values('Eadburga', 'marijke@email.com', 4)
+values('Eadburga', 'marijke@email.com', 4);
 
 insert into Player
-values('Jockie', 'matthias@email.com', 5)
+values('Jockie', 'matthias@email.com', 5);
 
 insert into Location
 values(1, 'Road of Regrets 1', 'Temple of Time', 'Ossyria');
