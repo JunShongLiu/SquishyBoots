@@ -1,4 +1,4 @@
-<!-- <DOCTYPE html>
+<DOCTYPE html>
 <html>
 	<head>
 		<title>
@@ -14,6 +14,6 @@ Email: <input type="text" name="email"><br>
 </form>
 
 </body>
-</html>  -->
+</html> 
 
 
