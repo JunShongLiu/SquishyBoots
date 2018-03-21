@@ -178,6 +178,12 @@ insert into Characters
 values(295, 10, 'Daisy', 12, 5);
 
 insert into Characters
+values(300, 12, 'Peach', 55, 11);
+
+insert into Characters
+values(295, 11, 'Paul', 100, 12);
+
+insert into Characters
 values(200, 80,'Wolf', 1, 6);
 
 insert into Characters
@@ -221,6 +227,12 @@ values('Bowman', 'Mercedes', 588, 4, 2);
 
 insert into Hero
 values('Pirate', 'Mechanic', 711, 5, 1);
+
+insert into Hero
+values('Bowman', 'Mercedes', 1001, 5, 10);
+
+insert into Hero
+values('Warrio', 'Zero', 1002, 3, 11);
 
 insert into Item
 values(1, 22, 'hat', 'Mithril Sharp Helm', 100);
