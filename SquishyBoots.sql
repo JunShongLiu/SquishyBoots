@@ -279,6 +279,15 @@ values(2, 4);
 insert into Completes
 values(3, 5);
 
+insert into Completes
+values(2, 2);
+
+insert into Completes
+values(2, 3);
+
+insert into Completes
+values(2, 5);
+
 insert into Has
 values(6, 1);
 
