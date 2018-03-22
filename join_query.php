@@ -45,7 +45,7 @@ if ($db_conn) {
 	if(array_key_exists('join', $_GET)){
 		//echo "<br> JOIN <br>";
 		echo "<script>console.log( 'Button Pressed' );</script>";
-		$_SESSION["Join_Query"] = "select player_id, char_name, hero_class, job from player p natural join hero h natural join characters c";
+		$_SESSION["Join_Query"] = "select player_id, char_name, hero_class, job from player p natural join hero h natural join characters c order by player_id";
 		
 		session_write_close();
 		header("location: join_query.php");
@@ -57,7 +57,7 @@ if ($db_conn) {
 			//$createView = executePlainSQL("create view heroCharacter (char_name, hero_class, job, player_id) AS
 			//				select char_name, hero_class, job, player_id from characters c natural join hero h
 			//				");
-			$result = executePlainSQL("select player_id, char_name, hero_class, job from player p natural join hero h natural join characters c");
+			$result = executePlainSQL("select player_id, char_name, hero_class, job from player p natural join hero h natural join characters c order by player_id");
 			OCICommit($db_conn);
 			echo "<br>Result from Join Query<br>";
 			echo $result[1];
