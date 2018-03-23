@@ -33,8 +33,10 @@ This is the analysis screen
   </div>
 </nav>
 
+<div class="container" style="height: 100vh">
+
 <div class="container-fluid">
-<h2>Join Query</h2>
+  <h2>Join Query Screen</h2>
 </div>
 
 <!-- Calvin's Button -->
@@ -134,7 +136,7 @@ if ($db_conn) {
 
 			echo "<br>Result from Join Query<br>";
 			//echo $result[1];
-			echo "<table border = '1'>
+			echo "<table class = 'table table-bordered'>
 			<tr>
 			<th>Player ID</th>
 			<th>Character Name</th>
