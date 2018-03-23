@@ -8,6 +8,7 @@ This is the division screen
 	ini_set('session.save_path', './');
 	session_start();
 	echo session_id();
+	print_r ($_SESSION);
 ?>
 
 <!DOCTYPE html>
@@ -51,6 +52,13 @@ This is the division screen
 <input type="submit" value="Execute Query" class="btn btn-primary" name="division">
 </form>
 
+<p>Add a quest completed by a player by supplying a player id and a quest id</p>
+<form action="division_query.php" method="POST" id="InsertDivision" autocomplete="off">
+<input type="text" class="form-control" name="player_id" placeholder="Enter Player ID" width="5">
+<input type="text" class="form-control" name="quest_id" placeholder="Enter Quest ID" width="5">
+<input type="submit" value="Execute Query" class="btn btn-primary" name="InsertDivision">
+</form>
+
 <?php
 include("db_execute.php");
 
@@ -67,31 +75,80 @@ if ($db_conn) {
 		session_write_close();
 		header("location: division_query.php");
 	}
+	else if(array_key_exists("InsertDivision", $_POST)){
+		$tuple = array (
+				":bind1" => $_POST['player_id'],
+				":bind2" => $_POST['quest_id']
+		);
+		$alltuples = array (
+			$tuple
+		);
+		executeBoundSQL("insert into Completes values (:bind1, :bind2)", $alltuples);
+		OCICommit($db_conn);
+		if ($_POST && $success) {
+			header("location: division_query.php");
+		}
+	}
 	else {
+
 		if(isset($_SESSION["Div_Query"])){
 			$query = $_SESSION['Div_Query'];
 			$result = executePlainSQL("select Ch.Char_Name from Characters Ch where not exists ((select Q.Q_ID from Quest Q) minus (select C.Q_id from Completes C where Ch.Char_ID = C.Char_id))");
 			OCICommit($db_conn);
 
-			echo "<br>Result from Division Query<br>";
-			echo "<table>";
+			echo "<br><h4>Result from Division Query</h4><br>";
+			echo "<table class='table-bordered'>";
 			echo "<tr><th>Name</th></tr>";
 			while ($row = OCI_Fetch_Array($result, OCI_BOTH)) {
 				echo "<tr><td>" . $row["CHAR_NAME"] . "</td></tr>";
 				//echo $row[0];
 			}
-			echo "</table>";
+			echo "</table><br>";
 
 			unset($_SESSION['Div_Query']);
 		}
+
+		echo "<br><h3>Tables for Verification of Division Query</h3>";
+
+		$questResult = executePlainSQL("select * from Quest");
+		OCICommit($db_conn);
+		echo "<br>Quest Table<br>";
+		echo "<table class='table table-bordered'>";
+		echo "<tr><th>Quest ID</th><th>Quest Name</th><th>Location ID</th><th>Difficulty</th></tr>";
+		while ($row = OCI_Fetch_Array($questResult, OCI_BOTH)) {
+			echo "<tr><td>" . $row["Q_ID"] . "</td><td>" . $row["Q_NAME"] . "</td><td>" . $row["LOC_ID"] . "</td><td>" . $row["DIFFICULTY"] . "</td></tr>";
+			//echo $row[0];
+		}
+		echo "</table><br>";
+
+		$charResult = executePlainSQL("select * from Characters");
+		OCICommit($db_conn);
+		echo "<br>Quest Table<br>";
+		echo "<table class='table table-bordered'>";
+		echo "<tr><th>Character Name</th><th>Character Level</th><th>Character ID</th></tr>";
+		while ($row = OCI_Fetch_Array($charResult, OCI_BOTH)) {
+			echo "<tr><td>" . $row["CHAR_NAME"] . "</td><td>" . $row["CHAR_LEVEL"] . "</td><td>" . $row["CHAR_ID"] . "</td></tr>";
+			//echo $row[0];
+		}
+		echo "</table><br>";
+
+		$charResult = executePlainSQL("select * from Completes");
+		OCICommit($db_conn);
+		echo "<br>Character Complete Quest Table<br>";
+		echo "<table class='table table-bordered'>";
+		echo "<tr><th>Character ID</th><th>Quest ID</th></tr>";
+		while ($row = OCI_Fetch_Array($charResult, OCI_BOTH)) {
+			echo "<tr><td>" . $row["CHAR_ID"] . "</td><td>" . $row["Q_ID"] . "</td></tr>";
+			//echo $row[0];
+		}
+		echo "</table><br>";
 	}
 }
 
 ?>
 
-</div>>
+</div>
 
 </body>
 </html>
 
-?>

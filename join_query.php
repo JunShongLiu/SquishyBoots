@@ -19,12 +19,22 @@ This is the analysis screen
 </head>
 <body>
 
-<div class="page-header">
-	<h1>SquishyBoots</h1>
-</div>
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">SquishyBoots</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li class="active"><a href="http://www.ugrad.cs.ubc.ca/~s4i0b/SquishyBoots/admin_page.php">Home</a></li>
+      <li><a href="http://www.ugrad.cs.ubc.ca/~s4i0b/SquishyBoots/division_query.php">Division Query</a></li>
+      <li><a href="http://www.ugrad.cs.ubc.ca/~s4i0b/SquishyBoots/join_query.php">Join Query</a></li>
+      <li><a href="http://www.ugrad.cs.ubc.ca/~s4i0b/SquishyBoots/login2.php">Login Page</a></li>
+    </ul>
+  </div>
+</nav>
 
 <div class="container-fluid">
-<h2>Admin's Analysis Screen</h2>
+<h2>Join Query</h2>
 </div>
 
 <!-- Calvin's Button -->

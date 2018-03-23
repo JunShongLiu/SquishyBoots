@@ -54,7 +54,6 @@ This is the login screen
 
 		echo "<script>console.log( 'DB Connected' );</script>";
 		if(array_key_exists("delete", $_POST)){
-			echo "<script>console.log( 'Delete' );</script>";
 			$player_id = $_POST['player_id'];
 			$_SESSION["player_id"] = $player_id;
 			$query = "delete from Player where Player_ID = $player_id";
@@ -65,12 +64,11 @@ This is the login screen
 		}
 		//Show the Character Table
 		else {
-			echo "<script>console.log( 'Show table' );</script>";
 			$result = executePlainSql("select Username from Player");
 			OCICommit($db_conn);
 			
 			echo "<br>Players<br>";
-			echo "<table>";
+			echo "<table class='table table-bordered'>";
 			echo "<tr><th>Username</th></tr>";
 			while ($row = OCI_Fetch_Array($result, OCI_BOTH)) {
 				echo "<tr><td>" . $row["USERNAME"] . "</td></tr>";
