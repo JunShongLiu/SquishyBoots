@@ -54,7 +54,6 @@ CREATE TABLE Characters (
 grant select on Characters to public;
 
 CREATE TABLE Enemy (
-    Enemy_Level        int,
     Enemy_Exp        int,
     Char_ID            int,
     PRIMARY KEY(Char_ID),
@@ -199,19 +198,19 @@ insert into Characters
 values(80, 10, 'Slime', 7, 10);
 
 insert into Enemy
-values(1, 0, 6);
+values(1, 6);
 
 insert into Enemy
-values(8, 6, 7);
+values(6, 7);
 
 insert into Enemy
-values(1, 12, 8);
+values(12, 8);
 
 insert into Enemy
-values(4, 13, 9);
+values(13, 9);
 
 insert into Enemy
-values(7, 17, 10);
+values(17, 10);
 
 insert into Hero
 values('Magician', 'Luminous', 4117, 1, 5);
