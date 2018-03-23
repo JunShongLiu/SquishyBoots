@@ -59,6 +59,7 @@ if ($db_conn) {
 		echo "<td>" . $row['CHAR_NAME'] . "</td>";
 		echo "<td>" . $row['JOB'] . "</td>";
 		echo "<td>" . $row['CHAR_LEVEL'] . "</td>";
+		echo "<td> <a href='character.php?Char_id=$row[PLAYER_ID]'> More Details</a></td>";
 		echo "</tr>";
 	}
 	echo "</table>";
