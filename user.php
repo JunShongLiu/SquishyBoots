@@ -19,10 +19,10 @@
 <nav class="navbar navbar-inverse">
   <div class="container-fluid">
     <div class="navbar-header">
-      <a class="navbar-brand" href="http://www.ugrad.cs.ubc.ca/~s4i0b/SquishyBoots/login.php">SquishyBoots</a>
+      <a class="navbar-brand" href="http://www.ugrad.cs.ubc.ca/~v0i0b/SquishyBoots/login.php">SquishyBoots</a>
     </div>
     <ul class="nav navbar-nav">
-      <li><a href="http://www.ugrad.cs.ubc.ca/~s4i0b/SquishyBoots/user.php">Character Page</a></li>
+      <li><a href="http://www.ugrad.cs.ubc.ca/~v0i0b/SquishyBoots/user.php">Character Page</a></li>
     </ul>
   </div>
 </nav>
@@ -59,7 +59,7 @@ if ($db_conn) {
 		echo "<td>" . $row['CHAR_NAME'] . "</td>";
 		echo "<td>" . $row['JOB'] . "</td>";
 		echo "<td>" . $row['CHAR_LEVEL'] . "</td>";
-		echo "<td> <a href='character.php?Char_id=$row[PLAYER_ID]'> More Details</a></td>";
+		echo "<td> <a href='character.php?Char_id=$row[CHAR_ID]'> More Details</a></td>";
 		echo "</tr>";
 	}
 	echo "</table>";
