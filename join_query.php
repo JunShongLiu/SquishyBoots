@@ -99,60 +99,63 @@ if ($db_conn) {
 		$player = executePlainSQL("select * from player order by player_id");
 		$hero = executePlainSQL("select * from hero order by player_id");
 		$character = executePlainSQL("select * from characters order by char_id");
+		$char_id = array();
 
 		echo "<br><h3>Tables for Verification of Join Query</h3>";
 		
 		// Display entries of player
 		echo "<br>Table of Players<br>";
-		echo "<table border = '1'>
-		<tr>
+		echo "<table border = '1'>";
+		echo '<tr>
 		<th> Username </th>
 		<th> E-mail </th>
-		<th> Player ID </th>
-		</tr>";
+		<th style="background-color:#D1F2EB"> Player ID </th>'
+		.'</tr>';
 		while ($row = OCI_Fetch_Array($player, OCI_BOTH)) {
 			echo "<tr>";
 			echo "<td>" . $row['USERNAME'] . "</td>";
 			echo "<td>" . $row['EMAIL'] . "</td>";
-			echo "<td><b>" . $row['PLAYER_ID'] . "</b></td>";
-			echo "</tr>";
+			echo '<td style="background-color:#D1F2EB">' . $row['PLAYER_ID'] . '</td>';
+			echo '</tr>';
 		}
 		echo "</table>";
 
 		// Display entries of hero
 		echo "<br>Table of Heroes<br>";
-		echo "<table border = '1'>
-		<tr>
-		<th> Player ID </th>
+		echo "<table border = '1'>";
+		echo '<tr>
+		<th style="background-color:#D1F2EB"> Player ID </th>
 		<th> Hero Class </th>
 		<th> Job </th>
 		<th> Quests Completed </th>
-		<th> Character ID </th>
-		</tr>";
+		<th style="background-color:#FCF3CF"> Character ID </th>'.'</tr>';
 		while ($row = OCI_Fetch_Array($hero, OCI_BOTH)) {
 			echo "<tr>";
-			echo "<td>" . $row['PLAYER_ID'] . "</td>";
+			echo '<td style="background-color:#D1F2EB">' . $row['PLAYER_ID'] . "</td>";
 			echo "<td>" . $row['HERO_CLASS'] . "</td>";
 			echo "<td>" . $row['JOB'] . "</td>";
 			echo "<td>" . $row['QUESTS_COMPLETED'] . "</td>";
-			echo "<td>" . $row['CHAR_ID'] . "</td>";
+			echo '<td style="background-color:#FCF3CF">' . $row['CHAR_ID'] . "</td>";
+			array_push($char_id, $row['CHAR_ID']);
 			echo "</tr>";
 		}
 		echo "</table>";
 
-		// Display entries of player
+		// Display entries of characers
+		echo "$char_id[0] . $char_id[1] . $char_id[2] . $char_id[3]"; 
 		echo "<br>Table of Characters<br>";
-		echo "<table border = '1'>
-		<tr>
-		<th> Character ID </th>
+		echo "<table border = '1'>";
+		echo '<tr>
+		<th style="background-color:#FCF3CF"> Character ID </th>
 		<th> HP </th>
 		<th> MP </th>
 		<th> Character Name </th>
-		<th> Level </th>
-		</tr>";
+		<th> Level </th>' . '</tr>';
 		while ($row = OCI_Fetch_Array($character, OCI_BOTH)) {
 			echo "<tr>";
-			echo "<td>" . $row['CHAR_ID'] . "</td>";
+			if(in_array($row['CHAR_ID'], $char_id, true)){
+			echo '<td style="background-color:#FCF3CF">' . $row['CHAR_ID'] . "</td>";
+			} else { echo "<td>" . $row['CHAR_ID'] . "</td>"; }
 			echo "<td>" . $row['HP'] . "</td>";
 			echo "<td>" . $row['MP'] . "</td>";
 			echo "<td>" . $row['CHAR_NAME'] . "</td>";
@@ -161,6 +164,7 @@ if ($db_conn) {
 		}
 		echo "</table>";
 	}
+	echo "<br>";
 	
 }
 
