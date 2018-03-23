@@ -70,8 +70,8 @@ CREATE TABLE Hero (
     Player_ID                    int,
     Char_ID                        int,
     PRIMARY KEY(Char_ID),
-    FOREIGN KEY(Char_ID) REFERENCES Characters,
-    FOREIGN KEY(Player_ID) REFERENCES Player
+    FOREIGN KEY(Char_ID) REFERENCES Characters ON DELETE CASCADE,
+    FOREIGN KEY(Player_ID) REFERENCES Player ON DELETE CASCADE
 );
 
 grant select on Hero to public;
@@ -91,7 +91,7 @@ CREATE TABLE Carries(
     Char_id        int,
     Item_id        int,
     PRIMARY KEY(Char_id, Item_id),
-    FOREIGN KEY(Char_id) REFERENCES Hero,
+    FOREIGN KEY(Char_id) REFERENCES Hero ON DELETE CASCADE,
     FOREIGN KEY(Item_id) REFERENCES Item
 );
 
@@ -101,7 +101,7 @@ CREATE TABLE Completes(
     Char_id        int,
     Q_id        int,
     PRIMARY KEY(Char_id, Q_id),
-    FOREIGN KEY(Char_id) REFERENCES Hero,
+    FOREIGN KEY(Char_id) REFERENCES Hero ON DELETE CASCADE,
     FOREIGN KEY(Q_id) REFERENCES Quest
 );
 
@@ -229,10 +229,10 @@ insert into Hero
 values('Pirate', 'Mechanic', 711, 5, 1);
 
 insert into Hero
-values('Bowman', 'Mercedes', 1001, 5, 11);
+values('Bowman', 'Mercedes', 1001, 5, 10);
 
 insert into Hero
-values('Warrio', 'Zero', 1002, 3, 12);
+values('Warrio', 'Zero', 1002, 3, 11);
 
 insert into Item
 values(1, 22, 'hat', 'Mithril Sharp Helm', 100);
