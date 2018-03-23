@@ -229,10 +229,10 @@ insert into Hero
 values('Pirate', 'Mechanic', 711, 5, 1);
 
 insert into Hero
-values('Bowman', 'Mercedes', 1001, 5, 10);
+values('Bowman', 'Mercedes', 1001, 5, 11);
 
 insert into Hero
-values('Warrio', 'Zero', 1002, 3, 11);
+values('Warrio', 'Zero', 1002, 3, 12);
 
 insert into Item
 values(1, 22, 'hat', 'Mithril Sharp Helm', 100);
