@@ -67,12 +67,14 @@ if ($db_conn) {
 			//$createView = executePlainSQL("create view heroCharacter (char_name, hero_class, job, player_id) AS
 			//				select char_name, hero_class, job, player_id from characters c natural join hero h
 			//				");
-			//$player = executePlainSQL("select * from player");
-			//$hero = executePlainSQL("select * from hero");
-			//$character = executePlainSQL("select * from characters");
+			$player = executePlainSQL("select * from player order by player_id");
+			$hero = executePlainSQL("select * from hero order by player_id");
+			$character = executePlainSQL("select * from characters order by char_id");
 			$result = executePlainSQL("select player_id, char_name, hero_class, job from player p natural join hero h natural join characters c order by player_id");
 			OCICommit($db_conn);
-		/*	echo "<br>Table of Player<br>";
+
+			// Display entries of player
+			echo "<br>Table of Players<br>";
 			echo "<table border = '1'>
 			<tr>
 			<th> Username </th>
@@ -86,7 +88,49 @@ if ($db_conn) {
 				echo "<td>" . $row['PLAYER_ID'] . "</td>";
 				echo "</tr>";
 			}
-			echo "</table>"; */
+			echo "</table>";
+
+			// Display entries of hero
+			echo "<br>Table of Heroes<br>";
+			echo "<table border = '1'>
+			<tr>
+			<th> Player ID </th>
+			<th> Hero Class </th>
+			<th> Job </th>
+			<th> Quests Completed </th>
+			<th> Character ID </th>
+			</tr>";
+			while ($row = OCI_Fetch_Array($hero, OCI_BOTH)) {
+				echo "<tr>";
+				echo "<td>" . $row['PLAYER_ID'] . "</td>";
+				echo "<td>" . $row['HERO_CLASS'] . "</td>";
+				echo "<td>" . $row['JOB'] . "</td>";
+				echo "<td>" . $row['QUESTS_COMPLETED'] . "</td>";
+				echo "<td>" . $row['CHAR_ID'] . "</td>";
+				echo "</tr>";
+			}
+			echo "</table>";
+
+			// Display entries of player
+			echo "<br>Table of Characters<br>";
+			echo "<table border = '1'>
+			<tr>
+			<th> Character ID </th>
+			<th> HP </th>
+			<th> MP </th>
+			<th> Character Name </th>
+			<th> Level </th>
+			</tr>";
+			while ($row = OCI_Fetch_Array($character, OCI_BOTH)) {
+				echo "<tr>";
+				echo "<td>" . $row['CHAR_ID'] . "</td>";
+				echo "<td>" . $row['HP'] . "</td>";
+				echo "<td>" . $row['MP'] . "</td>";
+				echo "<td>" . $row['CHAR_NAME'] . "</td>";
+				echo "<td>" . $row['CHAR_LEVEL'] . "</td>";
+				echo "</tr>";
+			}
+			echo "</table>";
 
 			echo "<br>Result from Join Query<br>";
 			//echo $result[1];
