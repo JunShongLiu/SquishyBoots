@@ -142,7 +142,7 @@ if ($db_conn) {
 		echo "</table>";
 
 		// Display entries of characers
-		echo "$char_id[0] . $char_id[1] . $char_id[2] . $char_id[3]"; 
+		//echo "$char_id[0] . $char_id[1] . $char_id[2] . $char_id[3]"; 
 		echo "<br>Table of Characters<br>";
 		echo "<table border = '1'>";
 		echo '<tr>
