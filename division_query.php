@@ -97,7 +97,7 @@ if ($db_conn) {
 			OCICommit($db_conn);
 
 			echo "<br><h4>Result from Division Query</h4><br>";
-			echo "<table class='table-bordered'>";
+			echo "<table class='table table-bordered'>";
 			echo "<tr><th>Name</th></tr>";
 			while ($row = OCI_Fetch_Array($result, OCI_BOTH)) {
 				echo "<tr><td>" . $row["CHAR_NAME"] . "</td></tr>";
