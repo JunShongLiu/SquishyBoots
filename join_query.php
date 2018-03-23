@@ -67,10 +67,29 @@ if ($db_conn) {
 			//$createView = executePlainSQL("create view heroCharacter (char_name, hero_class, job, player_id) AS
 			//				select char_name, hero_class, job, player_id from characters c natural join hero h
 			//				");
+			//$player = executePlainSQL("select * from player");
+			//$hero = executePlainSQL("select * from hero");
+			//$character = executePlainSQL("select * from characters");
 			$result = executePlainSQL("select player_id, char_name, hero_class, job from player p natural join hero h natural join characters c order by player_id");
 			OCICommit($db_conn);
+		/*	echo "<br>Table of Player<br>";
+			echo "<table border = '1'>
+			<tr>
+			<th> Username </th>
+			<th> E-mail </th>
+			<th> Player ID </th>
+			</tr>";
+			while ($row = OCI_Fetch_Array($player, OCI_BOTH)) {
+				echo "<tr>";
+				echo "<td>" . $row['USERNAME'] . "</td>";
+				echo "<td>" . $row['EMAIL'] . "</td>";
+				echo "<td>" . $row['PLAYER_ID'] . "</td>";
+				echo "</tr>";
+			}
+			echo "</table>"; */
+
 			echo "<br>Result from Join Query<br>";
-			echo $result[1];
+			//echo $result[1];
 			echo "<table border = '1'>
 			<tr>
 			<th>Player ID</th>
