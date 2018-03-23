@@ -1,6 +1,6 @@
 <!-- 
 
-This is the analysis screen
+This is the division screen
 
 -->
 
@@ -21,12 +21,24 @@ This is the analysis screen
 </head>
 <body>
 
-<div class="page-header">
-	<h1>SquishyBoots</h1>
-</div>
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">SquishyBoots</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li class="active"><a href="http://www.ugrad.cs.ubc.ca/~s4i0b/SquishyBoots/admin_page.php">Home</a></li>
+      <li><a href="http://www.ugrad.cs.ubc.ca/~s4i0b/SquishyBoots/division_query.php">Division Query</a></li>
+      <li><a href="http://www.ugrad.cs.ubc.ca/~s4i0b/SquishyBoots/join_query.php">Join Query</a></li>
+      <li><a href="http://www.ugrad.cs.ubc.ca/~s4i0b/SquishyBoots/login2.php">Login Page</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="container" style="height: 100vh">
 
 <div class="container-fluid">
-  <h2>Admin's Analysis Screen</h2>
+  <h2>Division Screen</h2>
 </div>
 
 <!-- <div 
@@ -35,13 +47,9 @@ This is the analysis screen
 </form>
 </div> -->
 <p>Find characters who completed all the quests</p>
-<form action="analysis_screen.php" method="GET" id="DivisionForm">
+<form action="division_query.php" method="GET" id="DivisionForm">
 <input type="submit" value="Execute Query" class="btn btn-primary" name="division">
 </form>
-
-
-</body>
-</html>
 
 <?php
 include("db_execute.php");
@@ -57,7 +65,7 @@ if ($db_conn) {
 		$_SESSION["Div_Query"] = "select Ch.Char_Name from Characters Ch where not exists ((select Q.Q_ID from Quest Q) minus (select C.Q_id from Completes C where Ch.Char_ID = C.Char_id))";
 		
 		session_write_close();
-		header("location: analysis_screen.php");
+		header("location: division_query.php");
 	}
 	else {
 		if(isset($_SESSION["Div_Query"])){
@@ -78,5 +86,12 @@ if ($db_conn) {
 		}
 	}
 }
+
+?>
+
+</div>>
+
+</body>
+</html>
 
 ?>

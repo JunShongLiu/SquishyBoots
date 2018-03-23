@@ -45,7 +45,7 @@ This is the login screen
         <br>
         <br>
         <div class="text-center">
-    			<form action = "analysis_screen.php">
+    			<form action = "admin_page.php">
     			<button type="submit" class="btn btn-primary">Admin Page</button>
     			</form>
     	</div>
