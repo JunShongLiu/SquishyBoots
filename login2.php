@@ -34,7 +34,7 @@ This is the login screen
 
 	<div class="container" style="height: 100vh">
         <div class="text-center">
-                        <form action="login.php" method="GET" autocomplete="off">
+                        <form action="login2.php" method="GET" autocomplete="off">
                         	Email
                             <div class="form-group">
                                 <input type="text" class="form-control" name="email" width="20">
@@ -45,7 +45,7 @@ This is the login screen
         <br>
         <br>
         <div class="text-center">
-    			<form action = "analysis_screen.php">
+    			<form action = "admin_page.php">
     			<button type="submit" class="btn btn-primary">Admin Page</button>
     			</form>
     	</div>
