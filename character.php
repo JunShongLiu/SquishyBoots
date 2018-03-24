@@ -73,7 +73,7 @@ if ($db_conn) {
             echo "</table><br>";
             unset($_SESSION['Agg_Query']);
         }
-        $characterResult = executePlainSQL("SELECT C.Char_ID, C.Char_Name, C.Char_Level, C.HP, C.MP, H.Hero_Class, H.Job, H.Quests_Completed FROM Characters C, Hero H, Player P WHERE C.Char_ID = H.Char_ID AND H.Player_ID = P.Player_ID AND P.Player_ID = $player_id");
+        $characterResult = executePlainSQL("SELECT C.Char_ID, C.Char_Name, C.Char_Level, C.HP, C.MP, H.Hero_Class, H.Job, H.Quests_Completed FROM Characters C, Hero H, Player P WHERE C.Char_ID = H.Char_ID AND H.Player_ID = P.Player_ID AND P.Player_ID = $player_id AND C.Char_ID = $char_id");
         OCICommit($db_conn);
         echo "<br><h2>Your Character<h2><br>";
         echo "<table class='table table-bordered'>";
