@@ -52,7 +52,7 @@ CREATE TABLE Characters (
     Char_Level        int,
     Char_ID            int,
     PRIMARY KEY(Char_ID),
-	CONSTRAINT CHK_CHT CHECK (Char_ID > 0, Char_Level > 0)
+	CONSTRAINT CHK_CHT CHECK (Char_ID > 0 AND Char_Level > 0)
 );
 
 grant select on Characters to public;
