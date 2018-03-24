@@ -36,10 +36,6 @@
 <form action="character.php" method="GET" id="AggregationForm">
 <input type="submit" value="Execute Query" class="btn btn-primary" name="aggregation">
 </form>
-        
-</body>
-
-</html>
 
 <?php
 include("db_execute.php");
@@ -122,3 +118,31 @@ if ($db_conn) {
     }
 }
 ?>
+
+<p>Delete an item by giving the item_id</p>
+<form action="character.php" method="POST" id="delete_item" autocomplete="off">
+<input type="text" class="form-control" name="item" width="20">
+<input type="submit" value="Delete Item" class="btn btn-primary" name="delete_item">
+</form>
+
+<?php
+    if ($db_conn) {
+        if(array_key_exists("delete_item", $_POST)){
+            $_SESSION["DEBUG"] = 1;
+            $tuple = array (
+                ":bind1" => $char_id,
+                ":bind2" => $_POST['item']
+            );
+            $alltuples = array (
+                $tuple
+            );
+            executeBoundSQL("delete from Carries where Char_id = :bind1 and Item_id = :bind2", $alltuples);
+            OCICommit($db_conn);
+            header("location: character.php");
+        }
+    }
+?>
+        
+</body>
+
+</html>

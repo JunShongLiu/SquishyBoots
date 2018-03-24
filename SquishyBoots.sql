@@ -98,7 +98,7 @@ CREATE TABLE Carries(
     Item_id        int,
     PRIMARY KEY(Char_id, Item_id),
 	CONSTRAINT CHK_CAR CHECK (Char_id > 0 AND Item_id > 0),
-    FOREIGN KEY(Char_id) REFERENCES Hero ON DELETE CASCADE,
+    FOREIGN KEY(Char_id) REFERENCES Hero,
     FOREIGN KEY(Item_id) REFERENCES Item
 );
 
