@@ -15,7 +15,8 @@ CREATE TABLE Player (
     Username     varchar(80) UNIQUE,
     Email        varchar(80),
     Player_ID    int,
-    PRIMARY KEY(Player_ID)
+    PRIMARY KEY(Player_ID),
+	CONSTRAINT CHK_PID CHECK (Player_ID > 0)
 );
 
 grant select on Player to public;
@@ -25,7 +26,8 @@ CREATE TABLE Location (
     L_Name         varchar(80),
     City        varchar(80),
     Island        varchar(80),
-    PRIMARY KEY(Loc_ID)
+    PRIMARY KEY(Loc_ID),
+	CONSTRAINT CHK_LID CHECK (Loc_ID > 0)
 );
 
 grant select on Location to public;
@@ -37,6 +39,7 @@ CREATE TABLE Quest (
     Loc_id        int not NULL,
     Difficulty    int,
     PRIMARY KEY(Q_ID),
+	CONSTRAINT CHK_QST CHECK (Q_ID > 0 AND Loc_id > 0),
     FOREIGN KEY(Loc_id) REFERENCES Location ON DELETE CASCADE
 );
 
@@ -48,7 +51,8 @@ CREATE TABLE Characters (
     Char_Name         varchar(80),
     Char_Level        int,
     Char_ID            int,
-    PRIMARY KEY(Char_ID)
+    PRIMARY KEY(Char_ID),
+	CONSTRAINT CHK_CHT CHECK (Char_ID > 0, Char_Level > 0)
 );
 
 grant select on Characters to public;
@@ -57,6 +61,7 @@ CREATE TABLE Enemy (
     Enemy_Exp        int,
     Char_ID            int,
     PRIMARY KEY(Char_ID),
+	CONSTRAINT CHK_EMY CHECK (Char_ID > 0 AND Enemy_Exp >= 0),
     FOREIGN KEY(Char_ID) REFERENCES Characters
 );
 
@@ -69,6 +74,7 @@ CREATE TABLE Hero (
     Player_ID                    int,
     Char_ID                        int,
     PRIMARY KEY(Char_ID),
+	CONSTRAINT CHK_HRO CHECK (Char_ID > 0 AND Player_ID > 0 AND Quests_Completed > 0),
     FOREIGN KEY(Char_ID) REFERENCES Characters ON DELETE CASCADE,
     FOREIGN KEY(Player_ID) REFERENCES Player ON DELETE CASCADE
 );
@@ -81,7 +87,8 @@ CREATE TABLE Item(
     I_Type            varchar(80),
     I_Name            varchar(80),
     I_Value            int,
-    PRIMARY KEY(Item_ID)
+    PRIMARY KEY(Item_ID),
+	CONSTRAINT CHK_ITM CHECK (Item_ID > 0 AND I_Level > 0 AND I_Value >= 0)
 );
 
 grant select on Item to public;
@@ -90,6 +97,7 @@ CREATE TABLE Carries(
     Char_id        int,
     Item_id        int,
     PRIMARY KEY(Char_id, Item_id),
+	CONSTRAINT CHK_CAR CHECK (Char_id > 0 AND Item_id > 0),
     FOREIGN KEY(Char_id) REFERENCES Hero ON DELETE CASCADE,
     FOREIGN KEY(Item_id) REFERENCES Item
 );
@@ -100,6 +108,7 @@ CREATE TABLE Completes(
     Char_id        int,
     Q_id        int,
     PRIMARY KEY(Char_id, Q_id),
+	CONSTRAINT CHK_COM CHECK (Char_id > 0 AND Q_id > 0),
     FOREIGN KEY(Char_id) REFERENCES Hero ON DELETE CASCADE,
     FOREIGN KEY(Q_id) REFERENCES Quest
 );
@@ -110,6 +119,7 @@ CREATE TABLE Has(
     Enemy_id    int,
     Q_id         int,
     PRIMARY KEY(Enemy_id, Q_id),
+	CONSTRAINT CHK_HAS CHECK (Enemy_id > 0 AND Q_id > 0),
     FOREIGN KEY(Enemy_id) REFERENCES Enemy,
     FOREIGN KEY(Q_id) REFERENCES Quest
 );
@@ -174,7 +184,7 @@ insert into Characters
 values(295, 10, 'Daisy', 12, 4);
 
 insert into Characters
-values(295, 10, 'Daisy', 12, 5);
+values(295, 10, 'Lily', 12, 5);
 
 insert into Characters
 values(300, 12, 'Peach', 55, 11);
