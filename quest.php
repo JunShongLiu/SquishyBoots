@@ -34,8 +34,17 @@ $success = True; //keep track of errors so it redirects the page only if there a
 $db_conn = OCILogon("ora_s4i0b", "a31112148", "dbhost.ugrad.cs.ubc.ca:1522/ug");
 
 	if ($db_conn) {
-		//TODO remove hardcoded quest id
-	$questQuery = executePlainSQL("select * from Quest natural join Location where Q_ID = 1");
+	$quest_id;
+	if(isset($_GET['Quest_id']) && !empty($_GET['Quest_id'])){
+		$quest_id = $_GET['Quest_id'];
+		$_SESSION["Quest_ID"] = $quest_id;
+		session_write_close();
+	}
+	else{
+		$quest_id = $_SESSION['Quest_ID'];
+	}
+
+	$questQuery = executePlainSQL("select * from Quest natural join Location where Q_ID = $quest_id");
 	OCICommit($db_conn);
 
 	while ($row = OCI_Fetch_Array($questQuery, OCI_BOTH)) {
@@ -48,8 +57,7 @@ $db_conn = OCILogon("ora_s4i0b", "a31112148", "dbhost.ugrad.cs.ubc.ca:1522/ug");
 		echo "<p>Insert Image</p><br><br>";
 	}
 
-			//TODO remove hardcoded quest id
-	$enemiesQuery = executePlainSQL("select e.Char_ID, c.Char_Name, c.HP, c.MP, c.Char_Level, e.Enemy_Exp from Characters c, Enemy e, Has h where c.Char_ID = e.Char_ID and e.Char_ID = h.Enemy_id and h.Q_id = 1");
+	$enemiesQuery = executePlainSQL("select e.Char_ID, c.Char_Name, c.HP, c.MP, c.Char_Level, e.Enemy_Exp from Characters c, Enemy e, Has h where c.Char_ID = e.Char_ID and e.Char_ID = h.Enemy_id and h.Q_id = $quest_id");
 
 	OCICommit($db_conn);
 	echo "<h3>Enemies</h3><br>";
@@ -69,17 +77,21 @@ $db_conn = OCILogon("ora_s4i0b", "a31112148", "dbhost.ugrad.cs.ubc.ca:1522/ug");
 </form>
 
 <?php
-//include("db_execute.php");
 
-// $success = True; //keep track of errors so it redirects the page only if there are no errors
-// $db_conn = OCILogon("ora_s4i0b", "a31112148", "dbhost.ugrad.cs.ubc.ca:1522/ug");
+    $character_id = $_SESSION['Char_ID'];
 
 	if ($db_conn) {
 		if(array_key_exists("completeQuest", $_POST)){
-			//Remove hardcoded char id and quest id
-			executePlainSQL("insert into Completes values (1, 1)");
+			$tuple = array (
+				":bind1" => $character_id,
+				":bind2" => $quest_id
+			);
+			$alltuples = array (
+				$tuple
+			);
+			executeBoundSQL("insert into Completes values (:bind1, :bind2)", $alltuples);
 			OCICommit($db_conn);
-			header("location: character.php");
+			header("location: quest_list.php");
 		}
 	}
 

@@ -48,7 +48,18 @@ $db_conn = OCILogon("ora_s4i0b", "a31112148", "dbhost.ugrad.cs.ubc.ca:1522/ug");
 if ($db_conn) {
     echo "<script>console.log( 'DB Connected' );</script>";
     $player_id = $_SESSION['Player_ID'];
-    $char_id = $_GET['Char_id'];
+
+    $char_id;
+    if(isset($_GET['Char_id']) && !empty($_GET['Char_id'])){
+        $char_id = $_GET['Char_id'];
+        $_SESSION['Char_ID'] = $char_id;
+        session_write_close();
+    }
+    else{
+        $char_id = $_SESSION['Char_ID'];
+    }
+
+    //Debugging
     echo "<script>console.log( 'Player_ID' + $player_id );</script>";
     echo "<script>console.log( 'Char_ID' + $char_id );</script>";
 
@@ -88,7 +99,7 @@ if ($db_conn) {
             echo "<td>" . $row['HERO_CLASS'] . "</td>";
             echo "<td>" . $row['JOB'] . "</td>";
             echo "<td>" . $row['QUESTS_COMPLETED'] . "</td>";
-            echo "<td> <a href='quest.php'> Quest Details</a></td>";
+            echo "<td> <a href='quest_list.php'> Quest Details</a></td>";
             echo "</tr>";
         }
         echo "</table>";
