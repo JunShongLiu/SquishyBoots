@@ -61,7 +61,7 @@ if ($db_conn) {
 
     if(array_key_exists('aggregation', $_GET)){
         echo "<script>console.log( 'Button Pressed' );</script>";
-        $_SESSION["Agg_Query"] = "SELECT SUM(I.I_Value) FROM Item I, Carries C, Hero H, Player P WHERE I.Item_ID = C.Item_ID AND C.Char_ID = H.Char_ID AND H.Player_ID = P.Player_ID AND P.Player_ID = $player_id";
+        $_SESSION["Agg_Query"] = "SELECT SUM(I.I_Value) FROM Item I, Carries C, Hero H, Player P WHERE I.Item_ID = C.Item_ID AND C.Char_ID = H.Char_ID AND H.Player_ID = P.Player_ID AND P.Player_ID = $player_id AND H.Char_ID = $char_id";
         
         session_write_close();
         header("location: character.php");
@@ -100,7 +100,7 @@ if ($db_conn) {
         }
         echo "</table>";
 
-        $itemsResult = executePlainSQL("SELECT I.Item_ID, I.I_Name, I.I_Type, I.I_Level, I.I_Value FROM Item I, Carries C, Hero H, Player P WHERE I.Item_ID = C.Item_ID AND C.Char_ID = H.Char_ID AND H.Player_ID = P.Player_ID AND P.Player_ID = $player_id");
+        $itemsResult = executePlainSQL("SELECT I.Item_ID, I.I_Name, I.I_Type, I.I_Level, I.I_Value FROM Item I, Carries C, Hero H, Player P WHERE I.Item_ID = C.Item_ID AND C.Char_ID = H.Char_ID AND H.Player_ID = P.Player_ID AND P.Player_ID = $player_id AND H.Char_ID = $char_id");
         OCICommit($db_conn);
         echo "<br><h2>Your Items<h2><br>";
         echo "<table class='table table-bordered'>";
