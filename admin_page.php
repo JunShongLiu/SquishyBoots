@@ -26,7 +26,7 @@ This is the login screen
 <nav class="navbar navbar-inverse">
   <div class="container-fluid">
     <div class="navbar-header">
-      <a class="navbar-brand" href="#">SquishyBoots</a>
+      <a class="navbar-brand" href="http://www.ugrad.cs.ubc.ca/~d4p0b/SquishyBoots/login.php">SquishyBoots</a>
     </div>
     <ul class="nav navbar-nav">
       <li class="active"><a href="http://www.ugrad.cs.ubc.ca/~s4i0b/SquishyBoots/admin_page.php">Home</a></li>
