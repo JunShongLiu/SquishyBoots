@@ -11,7 +11,7 @@
 
 <?php
 
-$db_conn = OCILogon("ora_y0w0b", "a21529145", "ug");
+$db_conn = OCILogon("ora_y0w0b", "a21529145", "dbhost.ugrad.cs.ubc.ca:1522/ug");
 if (!$db_conn){
     $err = OCIError();
     echo "Connection failed" . $err['message'];

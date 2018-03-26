@@ -2,7 +2,7 @@
  <head>
   <title>New Hero</title>
  </head>
- <body>
+ <body background="pix/bg1.jpg">
 
 
  <h2> Create New Hero </h2>

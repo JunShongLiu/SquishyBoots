@@ -14,7 +14,8 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
-<body>
+<body background="pix/bg1.jpg">
+
 
 <nav class="navbar navbar-inverse">
   <div class="container-fluid">
@@ -30,6 +31,29 @@
 <div id = 'user'>
 	    
 </div>
+
+
+<form action="user.php" method="POST" id="CreateHero">
+    Character Name: <input type="text" name="charname" maxlength="20" required><br>
+    Job: <input type="text" name="job" required><br>
+<select name="class" multiple>
+<option value="magician">magician</option>
+<option value="bowman">bowman</option>
+<option value="pirate">pirate</option>
+<option value="thief">thief</option>
+<option value="warrior">warrior</option>
+</select> 
+<br> 
+<input type="submit" value="Create Hero" class="btn btn-primary" name="createhero">
+    </form>
+
+
+
+    <form action="user.php" method="POST" id="DeleteHero">
+    Character ID: <input type="text" name="Char_ID" maxlength="20"><br>
+    <input type="submit" value="Delete Hero" class="btn btn-primary" name="deletehero">
+    </form> 
+
 </body>
 
 </html>
@@ -38,7 +62,7 @@
 include("db_execute.php");
 
 $success = True; //keep track of errors so it redirects the page only if there are no errors
-$db_conn = OCILogon("ora_s4i0b", "a31112148", "dbhost.ugrad.cs.ubc.ca:1522/ug");
+$db_conn = OCILogon("ora_y0w0b", "a21529145", "dbhost.ugrad.cs.ubc.ca:1522/ug");
 
 if ($db_conn) {
 	echo "<script>console.log( 'DB Connected' );</script>";
@@ -64,43 +88,51 @@ if ($db_conn) {
 	}
 	echo "</table>";
 
-	unset($_SESSION['Agg_Query']);
 
-	// if(array_key_exists('aggregation', $_GET)){
-	// 	echo "<script>console.log( 'Button Pressed' );</script>";
-	// 	$player_id = $_SESSION['Player_ID'];
-	// 	$_SESSION["Agg_Query"] = "SELECT C.Char_Name, H.Job,C.Char_Level FROM Characters C, Hero H, Player P WHERE C.Char_ID = H.Char_ID AND H.Player_ID = P.Player_ID AND P.Player_ID = $player_id";
-	// 	session_write_close();
-	// 	header("location: user.php");
-	// }
-	// else {
-	// 	if(isset($_SESSION["Agg_Query"])){
-	// 		$char_page = 'character.php';
-	// 		$query = $_SESSION['Agg_Query'];
-	// 		$player_id = $_SESSION['Player_ID'];
-	// 		$result = executePlainSQL($query);
-	// 		OCICommit($db_conn);
+	if (array_key_exists("createhero", $_POST)){
 
-	// 		echo "<br>Result from Aggregation Query<br>";
-	// 		echo "<table border = '1' style = 'float: left'>";
-	// 		echo "<tr> <th>Name</th> <th>Job</th> <th>Level</th> </tr>";
-	// 		while ($row = OCI_Fetch_Array($result, OCI_BOTH)) {
-	// 			echo "<tr>";
-	// 			echo "<td>" . $row['CHAR_NAME'] . "</td>";
-	// 			echo "<td>" . $row['JOB'] . "</td>";
-	// 			echo "<td>" . $row['CHAR_LEVEL'] . "</td>";
-	// 			echo "</tr>";
-	// 		}
-	// 		echo "</table>";
-	// 		echo "<table border = '1' style = 'float: left'>";
-	// 		echo "<tr> <th>More</th> </tr>";
-	// 		echo "<tr><td><a href='character.php'>Click Here For More</a></td></tr>";
-	// 		echo "<tr><td><a href='character.php'>Click Here For More</a></td></tr>";
-	// 		echo "</table>";
 
-	// 		unset($_SESSION['Agg_Query']);
-	// 	}
-	// }
+            $tuple = array (
+                ":charID" => 16,   // number of total characters +1  change** 
+				":charname" => $_POST['charname'],
+				":job" => $_POST['job'],
+				":class" => $_POST['class'],
+				":playerID" => $_SESSION['Player_ID'],
+				":hp" => 100,
+				":mp" => 100,
+				":quests" => 0,
+				":level" => 10
+				
+            );
+            $alltuples = array (
+                $tuple
+            ); 
+				executeBoundSQL("insert into Hero values(:class, :job, :quests, :playerID, :charID)", $alltuples);
+ 		        executeBoundSQL("insert into Characters values(:hp, :mp, :charname, :level, :charID)", $alltuples);
+		        OCICommit($db_conn);
+
+				if ($_POST && $success){
+					header("location: user.php");
+				}
+		}
+
+	else if (array_key_exists("deletehero", $_POST)){
+		
+		if(!isset($_POST['Char_ID'])){
+			died('Form is not complete.');
+		}else{
+            $tuple = array (
+                ":bind1" => $_POST['Char_ID']
+			);
+			
+            $alltuples = array (
+                $tuple
+            );
+            executeBoundSQL("delete from Characters where Char_id = :bind1", $alltuples);
+            OCICommit($db_conn);
+            header("location: user.php");
+        } 
+	}	
 }
 
 ?> 

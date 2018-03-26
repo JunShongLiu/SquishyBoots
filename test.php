@@ -1,7 +1,7 @@
 <html>
 <?php
 
-if ($c=OCILogon("ora_s4i0b", "a31112148", "dbhost.ugrad.cs.ubc.ca:1522/ug")) {
+if ($c=OCILogon("ora_y0w0b", "a21529145", "dbhost.ugrad.cs.ubc.ca:1522/ug"){
   echo "Successfully connected to Oracle.\n";
 
 $query = "SELECT * FROM Character"; 

@@ -3,6 +3,7 @@
     session_start();
     echo session_id();
     print_r ($_SESSION);
+   
 ?>
 
 <!DOCTYPE html>
@@ -14,7 +15,14 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
-<body>
+<body background="pix/bg1.jpg">
+
+<?php
+ $class = $_SESSION['Hero_Class'];
+    echo '<img src="pix/' . $class . '.jpg">';
+?> 
+
+
 
 <nav class="navbar navbar-inverse">
   <div class="container-fluid">
@@ -40,7 +48,7 @@
 <?php
 include("db_execute.php");
 $success = True; //keep track of errors so it redirects the page only if there are no errors
-$db_conn = OCILogon("ora_s4i0b", "a31112148", "dbhost.ugrad.cs.ubc.ca:1522/ug");
+$db_conn = OCILogon("ora_y0w0b", "a21529145", "dbhost.ugrad.cs.ubc.ca:1522/ug");
 if ($db_conn) {
     echo "<script>console.log( 'DB Connected' );</script>";
     $player_id = $_SESSION['Player_ID'];

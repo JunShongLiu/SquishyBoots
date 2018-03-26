@@ -19,7 +19,8 @@ This is the login screen
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
-<body>
+<body background="pix/bg1.jpg">
+
 
 	<div class="page-header text-center">
 		<h1>SquishyBoots</h1>
@@ -41,6 +42,9 @@ This is the login screen
                             </div>
                             <input type="submit" id="sendlogin" value="Login" name="login" class="btn btn-primary">
                         </form>
+						<form action = "register.php">
+    			<button type="submit" class="btn btn-primary">Register</button>
+    			</form>
         </div>
         <br>
         <br>
@@ -48,6 +52,7 @@ This is the login screen
     			<form action = "admin_page.php">
     			<button type="submit" class="btn btn-primary">Admin Page</button>
     			</form>
+				
     	</div>
     </div>
 
@@ -59,7 +64,7 @@ This is the login screen
 <?php
 	include("db_execute.php");
 	$success = True; //keep track of errors so it redirects the page only if there are no errors
-	$db_conn = oci_connect("ora_s4i0b", "a31112148", "dbhost.ugrad.cs.ubc.ca:1522/ug");
+	$db_conn = OCILogon("ora_y0w0b", "a21529145", "dbhost.ugrad.cs.ubc.ca:1522/ug");
 	if($db_conn){
 
 		echo "<script>console.log( 'DB Connected' );</script>";

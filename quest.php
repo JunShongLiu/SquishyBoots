@@ -14,7 +14,8 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
-<body>
+<body background="pix/bg1.jpg">
+
 <nav class="navbar navbar-inverse">
   <div class="container-fluid">
     <div class="navbar-header">
@@ -31,7 +32,7 @@
 include("db_execute.php");
 
 $success = True; //keep track of errors so it redirects the page only if there are no errors
-$db_conn = OCILogon("ora_s4i0b", "a31112148", "dbhost.ugrad.cs.ubc.ca:1522/ug");
+$db_conn = OCILogon("ora_y0w0b", "a21529145", "dbhost.ugrad.cs.ubc.ca:1522/ug");
 
 	if ($db_conn) {
 	$quest_id;
@@ -50,7 +51,6 @@ $db_conn = OCILogon("ora_s4i0b", "a31112148", "dbhost.ugrad.cs.ubc.ca:1522/ug");
 	while ($row = OCI_Fetch_Array($questQuery, OCI_BOTH)) {
 		echo "<h2>" . $row['Q_NAME'] . "</h2>";
 		echo "<p>Difficulty Level: " . $row['DIFFICULTY'] . "</p><br><br>";
-
 		echo "<h3>" . $row['ISLAND'] . "</h3>";
 		echo "<h4>" . $row['CITY'] . "</h4>";
 		echo "<h5>" . $row["L_NAME"] . "</h5>";
