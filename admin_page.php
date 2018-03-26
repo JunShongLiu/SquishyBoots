@@ -7,7 +7,6 @@ This is the login screen
 <?php
 	ini_set('session.save_path', './');
 	session_start();
-	session_destroy();
 	echo session_id();
 	print_r ($_SESSION);
 ?>
@@ -50,7 +49,7 @@ This is the login screen
 		<?php
 		include("db_execute.php");
 		$success = True; //keep track of errors so it redirects the page only if there are no errors
-		$db_conn = OCILogon("ora_y0w0b", "a21529145", "dbhost.ugrad.cs.ubc.ca:1522/ug");
+		$db_conn = oci_connect("ora_y0w0b", "a21529145", "dbhost.ugrad.cs.ubc.ca:1522/ug");
 		if($db_conn){
 
 		echo "<script>console.log( 'DB Connected' );</script>";

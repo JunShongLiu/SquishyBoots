@@ -8,6 +8,7 @@ This is the login screen
 	ini_set('session.save_path', './');
 	session_start();
 	echo session_id();
+	print_r($_SESSION)
 ?>
 
 <!DOCTYPE html>
@@ -76,12 +77,19 @@ This is the login screen
 
 			$_SESSION['result'] = $result;
 
+			$i = 0;
 			while ($row = OCI_Fetch_Array($result, OCI_BOTH)) {
+				$i++;
 				$_SESSION['Player_ID'] = $row[0];
 			}
-			oci_free_statement($result);
-			session_write_close();
-			header('Location: user.php');
+			if($i == 0){
+				echo "<script type='text/javascript'>alert('User Does Not Exist!!!');</script>";
+			}
+			else {
+				oci_free_statement($result);
+				session_write_close();
+				header('Location: user.php');
+			}
 		}
 	}
 ?>
