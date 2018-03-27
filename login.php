@@ -23,8 +23,8 @@ This is the login screen
 
 	<div class="page-header text-center">
 		<h1>SquishyBoots</h1>
-
-		<p> We need a logo! </p>
+		<img src='pix/logo.jpg'>
+		//<p> We need a logo! </p>
 	</div>
 
 
