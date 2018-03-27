@@ -268,10 +268,10 @@ insert into Carries
 values(4, 4);
 
 insert into Carries
-values(2, 1);
+values(1, 1);
 
 insert into Carries
-values(3, 5);
+values(5, 5);
 
 insert into Carries
 values(11, 5);
