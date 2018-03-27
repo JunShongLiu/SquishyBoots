@@ -65,7 +65,7 @@ This is the login screen
 <?php
 	include("db_execute.php");
 	$success = True; //keep track of errors so it redirects the page only if there are no errors
-	$db_conn = OCILogon("ora_v0i0b", "a35223149", "dbhost.ugrad.cs.ubc.ca:1522/ug");
+	$db_conn = OCILogon("ora_s4i0b", "a31112148", "dbhost.ugrad.cs.ubc.ca:1522/ug");
 	if($db_conn){
 
 		echo "<script>console.log( 'DB Connected' );</script>";

@@ -30,7 +30,6 @@ This is the analysis screen
       <li><a href="http://www.ugrad.cs.ubc.ca/~s4i0b/SquishyBoots/division_query.php">Division Query</a></li>
       <li><a href="http://www.ugrad.cs.ubc.ca/~s4i0b/SquishyBoots/join_query.php">Join Query</a></li>
       <li><a href="http://www.ugrad.cs.ubc.ca/~s4i0b/SquishyBoots/update_query.php">Update Query</a></li>
-      <li><a href="http://www.ugrad.cs.ubc.ca/~s4i0b/SquishyBoots/nested_aggregation_query.php">Nested Aggregation Query</a></li>
       <li><a href="http://www.ugrad.cs.ubc.ca/~s4i0b/SquishyBoots/login.php">Login Page</a></li>
     </ul>
   </div>
@@ -54,7 +53,7 @@ This is the analysis screen
 <?php
 include("db_execute.php");
 $success = True; //keep track of errors so it redirects the page only if there are no errors
-$db_conn = OCILogon("ora_y0w0b", "a21529145", "dbhost.ugrad.cs.ubc.ca:1522/ug");
+$db_conn = OCILogon("ora_s4i0b", "a31112148", "dbhost.ugrad.cs.ubc.ca:1522/ug");
 if ($db_conn) {
 	echo "<script>console.log( 'DB Connected' );</script>";
 	if(array_key_exists('join', $_GET)){
