@@ -273,6 +273,12 @@ values(2, 1);
 insert into Carries
 values(3, 5);
 
+insert into Carries
+values(11, 5);
+
+insert into Carries
+values(12, 2);
+
 insert into Completes
 values(2, 1);
 
