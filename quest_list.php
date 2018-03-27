@@ -1,8 +1,6 @@
 <?php
 	ini_set('session.save_path', './');
 	session_start();
-	echo session_id();
-	print_r ($_SESSION);
 ?>
 
 <!DOCTYPE html>

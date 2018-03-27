@@ -1,8 +1,6 @@
 <?php
 	ini_set('session.save_path', './');
 	session_start();
-	echo session_id();
-	print_r ($_SESSION);
 ?>
 
 <!DOCTYPE html>
@@ -20,10 +18,10 @@
 <nav class="navbar navbar-inverse">
   <div class="container-fluid">
     <div class="navbar-header">
-      <a class="navbar-brand" href="http://www.ugrad.cs.ubc.ca/~s0i0b/SquishyBoots/login.php">SquishyBoots</a>
+      <a class="navbar-brand" href="http://www.ugrad.cs.ubc.ca/~s4i0b/SquishyBoots/login.php">SquishyBoots</a>
     </div>
     <ul class="nav navbar-nav">
-      <li><a href="http://www.ugrad.cs.ubc.ca/~v0i0b/SquishyBoots/user.php">Character Page</a></li>
+      <li><a href="http://www.ugrad.cs.ubc.ca/~s4i0b/SquishyBoots/user.php">Character Page</a></li>
     </ul>
   </div>
 </nav>
