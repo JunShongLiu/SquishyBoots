@@ -258,6 +258,18 @@ values(4, 120, 'gun', 'Reverse Blindness', 1000);
 insert into Item
 values(5, 20, 'spear', 'Bamboo Spears', 90);
 
+insert into Item
+values(6, 10, 'hat', 'Brown Rocky Bandana', 90);
+
+insert into Item
+values(7, 10, 'hat', 'Red Misty', 2000);
+
+insert into Item
+values(8, 10, 'shield', 'Esther Shield', 120);
+
+insert into Item
+values(9, 10, 'shield', 'Maple Magician Shield', 220);
+
 insert into Carries
 values(3, 2);
 
@@ -278,6 +290,27 @@ values(11, 5);
 
 insert into Carries
 values(12, 2);
+
+insert into Carries
+values(3, 6);
+
+insert into Carries
+values(2, 7);
+
+insert into Carries
+values(4, 8);
+
+insert into Carries
+values(1, 9);
+
+insert into Carries
+values(5, 6);
+
+insert into Carries
+values(11, 7);
+
+insert into Carries
+values(12, 8);
 
 insert into Completes
 values(2, 1);
