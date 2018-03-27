@@ -95,7 +95,7 @@ if ($db_conn) {
         }
         $characterResult = executePlainSQL("SELECT C.Char_ID, C.Char_Name, C.Char_Level, C.HP, C.MP, H.Hero_Class, H.Job, H.Quests_Completed FROM Characters C, Hero H, Player P WHERE C.Char_ID = H.Char_ID AND H.Player_ID = P.Player_ID AND P.Player_ID = $player_id AND C.Char_ID = $char_id");
         OCICommit($db_conn);
-        echo "<br><h2>Your Character<h2><br>";
+        echo "<br><h2>Your Character</h2><br>";
         echo "<table class='table table-bordered'>";
         echo "<tr> <th>Char ID</th> <th>Name</th> <th>Level</th> <th>HP</th> <th>MP</th> <th>Class</th> <th>Job</th> <th>Quests Completed</th> <th>Quests</th></tr>";
         while ($row = OCI_Fetch_Array($characterResult, OCI_BOTH)) {
@@ -114,7 +114,7 @@ if ($db_conn) {
         echo "</table>";
         $itemsResult = executePlainSQL("SELECT I.Item_ID, I.I_Name, I.I_Type, I.I_Level, I.I_Value FROM Item I, Carries C, Hero H, Player P WHERE I.Item_ID = C.Item_ID AND C.Char_ID = H.Char_ID AND H.Player_ID = P.Player_ID AND P.Player_ID = $player_id AND H.Char_ID = $char_id");
         OCICommit($db_conn);
-        echo "<br><h2>Your Items<h2><br>";
+        echo "<br><h2>Your Items</h2><br>";
         echo "<table class='table table-bordered'>";
         echo "<tr> <th>Item ID</th> <th>Name</th> <th>Type</th> <th>Level</th> <th>Value</th></tr>";
         while ($row = OCI_Fetch_Array($itemsResult, OCI_BOTH)) {

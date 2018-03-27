@@ -1,6 +1,7 @@
 <?php
 	ini_set('session.save_path', './');
 	session_start();
+	echo "";
 ?>
 
 <!DOCTYPE html>
@@ -25,11 +26,6 @@
     </ul>
   </div>
 </nav>
-
-<div id = 'user'>
-	    
-</div>
-
 
 <form action="user.php" method="POST" id="CreateHero">
     Character Name: <input type="text" name="charname" maxlength="20" required><br>
@@ -71,7 +67,7 @@ if ($db_conn) {
 	$charactersResult = executePlainSQL("SELECT H.Player_ID, C.Char_ID, C.Char_Name, H.Job,C.Char_Level FROM Characters C, Hero H, Player P WHERE C.Char_ID = H.Char_ID AND H.Player_ID = P.Player_ID AND P.Player_ID = $player_id");
 	OCICommit($db_conn);
 
-	echo "<br><h2>Choose your character<h2><br>";
+	echo "<br><h2>Choose your character</h2><br>";
 	echo "<table class='table table-bordered'>";
 	echo "<tr> <th>Player ID</th> <th>Char ID</th> <th>Name</th> <th>Job</th> <th>Level</th> <th>More Detail</th></tr>";
 	while ($row = OCI_Fetch_Array($charactersResult, OCI_BOTH)) {
