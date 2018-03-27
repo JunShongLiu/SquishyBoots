@@ -1,6 +1,6 @@
 <?php
     ini_set('session.save_path', './');
-    session_start();   
+    session_start();
 ?>
 
 <!DOCTYPE html>
@@ -13,13 +13,6 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body background="pix/bg1.jpg">
-
-<?php
- $class = $_SESSION['Hero_Class'];
-    echo '<img src="pix/' . $class . '.jpg">';
-?> 
-
-
 
 <nav class="navbar navbar-inverse">
   <div class="container-fluid">
@@ -37,9 +30,17 @@
 </div>
 
 
-<p>Find value of all items carried by character</p>
-<form action="character.php" method="GET" id="AggregationForm">
-<input type="submit" value="Execute Query" class="btn btn-primary" name="aggregation">
+<p>Find stats about your items</p>
+<form action="character.php" method="GET" id="MaxAggregationForm">
+<input type="submit" value="Most Expensive" class="btn btn-primary" name="maxAggregation">
+</form>
+
+<form action="character.php" method="GET" id="MinAggregationForm">
+<input type="submit" value="Least Expensive" class="btn btn-primary" name="minAggregation">
+</form>
+
+<form action="character.php" method="GET" id="SumAggregationForm">
+<input type="submit" value="Total Value" class="btn btn-primary" name="sumAggregation">
 </form>
 
 <?php
@@ -49,7 +50,6 @@ $db_conn = OCILogon("ora_s4i0b", "a31112148", "dbhost.ugrad.cs.ubc.ca:1522/ug");
 if ($db_conn) {
     echo "<script>console.log( 'DB Connected' );</script>";
     $player_id = $_SESSION['Player_ID'];
-
     $char_id;
     if(isset($_GET['Char_id']) && !empty($_GET['Char_id'])){
         $char_id = $_GET['Char_id'];
@@ -59,13 +59,21 @@ if ($db_conn) {
     else{
         $char_id = $_SESSION['Char_ID'];
     }
-
     //Debugging
     echo "<script>console.log( 'Player_ID' + $player_id );</script>";
     echo "<script>console.log( 'Char_ID' + $char_id );</script>";
-
-    if(array_key_exists('aggregation', $_GET)){
-        echo "<script>console.log( 'Button Pressed' );</script>";
+    if(array_key_exists('maxAggregation', $_GET)){
+        echo "<script>console.log( 'Max Button Pressed' );</script>";
+        $_SESSION["Agg_Query"] = "SELECT MAX(I.I_Value) FROM Item I, Carries C, Hero H, Player P WHERE I.Item_ID = C.Item_ID AND C.Char_ID = H.Char_ID AND H.Player_ID = P.Player_ID AND P.Player_ID = $player_id AND H.Char_ID = $char_id";
+    session_write_close();
+    header("location: character.php");
+    } elseif(array_key_exists('minAggregation', $_GET)){
+    echo "<script>console.log( 'Min Button Pressed' );</script>";
+    $_SESSION["Agg_Query"] = "SELECT MIN(I.I_Value) FROM Item I, Carries C, Hero H, Player P WHERE I.Item_ID = C.Item_ID AND C.Char_ID = H.Char_ID AND H.Player_ID = P.Player_ID AND P.Player_ID = $player_id AND H.Char_ID = $char_id";
+    session_write_close();
+    header("location: character.php");
+    } elseif(array_key_exists('sumAggregation', $_GET)){
+        echo "<script>console.log( 'Sum Button Pressed' );</script>";
         $_SESSION["Agg_Query"] = "SELECT SUM(I.I_Value) FROM Item I, Carries C, Hero H, Player P WHERE I.Item_ID = C.Item_ID AND C.Char_ID = H.Char_ID AND H.Player_ID = P.Player_ID AND P.Player_ID = $player_id AND H.Char_ID = $char_id";
         
         session_write_close();
@@ -104,7 +112,6 @@ if ($db_conn) {
             echo "</tr>";
         }
         echo "</table>";
-
         $itemsResult = executePlainSQL("SELECT I.Item_ID, I.I_Name, I.I_Type, I.I_Level, I.I_Value FROM Item I, Carries C, Hero H, Player P WHERE I.Item_ID = C.Item_ID AND C.Char_ID = H.Char_ID AND H.Player_ID = P.Player_ID AND P.Player_ID = $player_id AND H.Char_ID = $char_id");
         OCICommit($db_conn);
         echo "<br><h2>Your Items<h2><br>";
