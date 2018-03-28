@@ -109,7 +109,7 @@ if ($db_conn) {
 
             echo "<br><h4>Result from Nested Aggregation Query</h4><br>";
             echo "<table class='table table-bordered'>";
-            echo "<tr><th>Quests Completed</th></tr>";
+            echo "<tr><th>Events Completed</th></tr>";
             while ($row = OCI_Fetch_Array($result, OCI_BOTH)) {
                 echo "<tr><td>" . $row["0"] . "</td></tr>";
                 //echo $row[0];
