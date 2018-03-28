@@ -1,6 +1,6 @@
 <!-- 
 
-This is the login screen
+This is the delete screen
 
 -->
 
@@ -37,7 +37,7 @@ This is the login screen
 
 	<div class="container" style="height: 100vh">
         <div class="text-center">
-                        <form action="admin_page.php" method="POST" autocomplete="off">
+                        <form action="delete.php" method="POST" autocomplete="off">
                         	Delete Player
                             <div class="form-group">
                                 <input type="text" class="form-control" name="player_id" placeholder="Enter Player ID" width="10">
