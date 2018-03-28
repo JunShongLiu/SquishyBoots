@@ -44,7 +44,7 @@
 
 
     <form action="user.php" method="POST" id="DeleteHero">
-    Character ID: <input type="number" name="Char_ID" maxlength="20"><br>
+    Character ID: <input type="number" min="0" name="Char_ID" maxlength="20"><br>
     <input type="submit" value="Delete Hero" class="btn btn-primary" name="deletehero">
     </form> 
 
