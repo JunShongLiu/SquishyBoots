@@ -133,7 +133,7 @@ if ($db_conn) {
 
 <p>Delete an item by giving the item_id</p>
 <form action="character.php" method="POST" id="delete_item" autocomplete="off">
-<input type="text" class="form-control" name="item" width="20">
+<input type="number" class="form-control" name="item" width="20">
 <input type="submit" value="Delete Item" class="btn btn-primary" name="delete_item">
 </form>
 
