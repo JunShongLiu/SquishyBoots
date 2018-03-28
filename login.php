@@ -48,7 +48,7 @@ This is the login screen
         <br>
         <br>
         <div class="text-center">
-    			<form action = "admin_page.php">
+    			<form action = "delete.php">
     			<button type="submit" class="btn btn-primary">Admin Page</button>
     			</form>
 				
