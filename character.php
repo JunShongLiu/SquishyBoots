@@ -30,14 +30,18 @@
 </div>
 
 
-<p>Find stats about your items</p>
+<p><h4>Find Statistics About Your Character's Items</h4></p>
 <form action="character.php" method="GET" id="MaxAggregationForm">
 <input type="submit" value="Most Expensive" class="btn btn-primary" name="maxAggregation">
 </form>
 
+<br>
+
 <form action="character.php" method="GET" id="MinAggregationForm">
 <input type="submit" value="Least Expensive" class="btn btn-primary" name="minAggregation">
 </form>
+
+<br>
 
 <form action="character.php" method="GET" id="SumAggregationForm">
 <input type="submit" value="Total Value" class="btn btn-primary" name="sumAggregation">
@@ -133,7 +137,7 @@ if ($db_conn) {
 
 <p>Delete an item by giving the item_id</p>
 <form action="character.php" method="POST" id="delete_item" autocomplete="off">
-<input type="number" min="0" class="form-control" name="item" width="20">
+<input type="number" min="1" class="form-control" name="item" width="20">
 <input type="submit" value="Delete Item" class="btn btn-primary" name="delete_item">
 </form>
 

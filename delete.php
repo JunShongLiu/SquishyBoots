@@ -40,7 +40,7 @@ This is the delete screen
                         <form action="delete.php" method="POST" autocomplete="off">
                         	Delete Player
                             <div class="form-group">
-                                <input type="text" class="form-control" name="player_id" placeholder="Enter Player ID" width="10">
+                                <input type="number" min='1' class="form-control" name="player_id" placeholder="Enter Player ID" width="10">
                             </div>
                             <input type="submit" id="deletePlayer" value="Delete" name="delete" class="btn btn-primary">
                         </form>

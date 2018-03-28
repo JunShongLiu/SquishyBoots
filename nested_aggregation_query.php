@@ -51,9 +51,13 @@ This is the nested aggregation screen screen
 <input type="submit" value="Most Active" class="btn btn-primary" name="maxNestedAggregation">
 </form>
 
+<br>
+
 <form action="nested_aggregation_query.php" method="GET" id="MinNestedAggregationForm">
 <input type="submit" value="Least Active" class="btn btn-primary" name="minNestedAggregation">
 </form>
+
+<br>
 
 <p>Find Player With the Most Events Completed Across All Their Characters</p>
 <form action="nested_aggregation_query.php" method="GET" id="OtherNestedAggregationForm">
