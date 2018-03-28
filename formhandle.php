@@ -44,7 +44,8 @@ print_r ($_SESSION);
 <table border="0">
 
 <h3> Projection </h3>
-<form action="formhandle.php" method="post" autocomplete="off">
+
+<form action="formhandle.php" method="POST">
 Table: <input type="text" name="table" required><br>   
 Column: <input type="text" name="column1" required><br>
 Column: <input type="text" name="column2" required><br>
@@ -75,32 +76,45 @@ include("db_execute.php");
 $success = True; //keep track of errors so it redirects the page only if there are no errors
 $db_conn = OCILogon("ora_y0w0b", "a21529145", "dbhost.ugrad.cs.ubc.ca:1522/ug");
 
-
-if ($db_conn) {
-
+if ($db_conn){
 	if (array_key_exists("projection", $_POST)){
     $tuple = array (
         ":column1" => $_POST['column1'],
 				":column2" => $_POST['column2'],
 				":table" => $_POST['table'],
-				":row" => $_POST['row']
-            );
-            $alltuples = array (
-                $tuple
-            ); 
+        ":row" => $_POST['row']
+    );
 
-				$result = executeBoundSQL("select (:column1, :column2) from (:table) where (:row)", $alltuples);
-	
+    $row = $_POST['row'];
+    echo $row . "hi"; 
 
+    $alltuples = array (
+      $tuple
+    ); 
+
+    $tabless = $_POST['table'];
+    echo $tabless; 
+
+        if(!$row){
+        $result = executeBoundSQL("select :column1, :column2 from :table", $alltuples);
+        echo "yo";
+        }else {
+          $result = executeBoundSQL("select :column1, :column2 from :table where :row", $alltuples);
+        }
+
+        OCICommit($db_conn);
+        
 				if ($_POST && $success){
 					header("location: formhandle.php");
         }
+        $c1 = $_POST['column1'];
+        $c2 = $_POST['column2'];  
 
         echo "<br><h2>Query<h2><br>";
         echo "<table class='table table-bordered'>";
         $column1 = $_POST['column1'];
 			  $column2 = $_POST['column2'];
-        echo "<tr> <th>$column1</th> <th>$column2</th> </tr>";
+        echo "<tr> <th> $c1  </th> <th>$c2</th> </tr>";
         while ($row = OCI_Fetch_Array($result, OCI_BOTH)) {
           echo "<tr>";
           echo "<td>" . $row['column1'] . "</td>";
@@ -108,7 +122,6 @@ if ($db_conn) {
           echo "</tr>";
         }
         echo "</table>";
-        OCICommit($db_conn);
     }
   }
 ?>
