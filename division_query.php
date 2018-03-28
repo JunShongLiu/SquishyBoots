@@ -53,8 +53,8 @@ This is the division screen
 
 <p>Add a quest completed by a player by supplying a player id and a quest id</p>
 <form action="division_query.php" method="POST" id="InsertDivision" autocomplete="off">
-<input type="text" class="form-control" name="player_id" placeholder="Enter Player ID" width="5">
-<input type="text" class="form-control" name="quest_id" placeholder="Enter Quest ID" width="5">
+<input type="number" min="0" class="form-control" name="player_id" placeholder="Enter Player ID" width="5">
+<input type="number" min="0" class="form-control" name="quest_id" placeholder="Enter Quest ID" width="5">
 <input type="submit" value="Execute Query" class="btn btn-primary" name="InsertDivision">
 </form>
 
