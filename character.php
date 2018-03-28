@@ -1,9 +1,6 @@
 <?php
     ini_set('session.save_path', './');
     session_start();
-    echo session_id();
-    print_r ($_SESSION);
-   
 ?>
 
 <!DOCTYPE html>
@@ -16,13 +13,6 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body background="pix/bg1.jpg">
-
-<?php
- $class = $_SESSION['Hero_Class'];
-    echo '<img src="pix/' . $class . '.jpg">';
-?> 
-
-
 
 <nav class="navbar navbar-inverse">
   <div class="container-fluid">
@@ -56,11 +46,10 @@
 <?php
 include("db_execute.php");
 $success = True; //keep track of errors so it redirects the page only if there are no errors
-$db_conn = OCILogon("ora_y0w0b", "a21529145", "dbhost.ugrad.cs.ubc.ca:1522/ug");
+$db_conn = OCILogon("ora_s4i0b", "a31112148", "dbhost.ugrad.cs.ubc.ca:1522/ug");
 if ($db_conn) {
     echo "<script>console.log( 'DB Connected' );</script>";
     $player_id = $_SESSION['Player_ID'];
-
     $char_id;
     if(isset($_GET['Char_id']) && !empty($_GET['Char_id'])){
         $char_id = $_GET['Char_id'];
@@ -70,22 +59,19 @@ if ($db_conn) {
     else{
         $char_id = $_SESSION['Char_ID'];
     }
-
     //Debugging
     echo "<script>console.log( 'Player_ID' + $player_id );</script>";
     echo "<script>console.log( 'Char_ID' + $char_id );</script>";
     if(array_key_exists('maxAggregation', $_GET)){
-    	echo "<script>console.log( 'Max Button Pressed' );</script>";
-    	$_SESSION["Agg_Query"] = "SELECT MAX(I.I_Value) FROM Item I, Carries C, Hero H, Player P WHERE I.Item_ID = C.Item_ID AND C.Char_ID = H.Char_ID AND H.Player_ID = P.Player_ID AND P.Player_ID = $player_id AND H.Char_ID = $char_id";
-
-	session_write_close();
-	header("location: character.php");
+        echo "<script>console.log( 'Max Button Pressed' );</script>";
+        $_SESSION["Agg_Query"] = "SELECT MAX(I.I_Value) FROM Item I, Carries C, Hero H, Player P WHERE I.Item_ID = C.Item_ID AND C.Char_ID = H.Char_ID AND H.Player_ID = P.Player_ID AND P.Player_ID = $player_id AND H.Char_ID = $char_id";
+    session_write_close();
+    header("location: character.php");
     } elseif(array_key_exists('minAggregation', $_GET)){
-	echo "<script>console.log( 'Min Button Pressed' );</script>";
-	$_SESSION["Agg_Query"] = "SELECT MIN(I.I_Value) FROM Item I, Carries C, Hero H, Player P WHERE I.Item_ID = C.Item_ID AND C.Char_ID = H.Char_ID AND H.Player_ID = P.Player_ID AND P.Player_ID = $player_id AND H.Char_ID = $char_id";
-
-	session_write_close();
-	header("location: character.php");
+    echo "<script>console.log( 'Min Button Pressed' );</script>";
+    $_SESSION["Agg_Query"] = "SELECT MIN(I.I_Value) FROM Item I, Carries C, Hero H, Player P WHERE I.Item_ID = C.Item_ID AND C.Char_ID = H.Char_ID AND H.Player_ID = P.Player_ID AND P.Player_ID = $player_id AND H.Char_ID = $char_id";
+    session_write_close();
+    header("location: character.php");
     } elseif(array_key_exists('sumAggregation', $_GET)){
         echo "<script>console.log( 'Sum Button Pressed' );</script>";
         $_SESSION["Agg_Query"] = "SELECT SUM(I.I_Value) FROM Item I, Carries C, Hero H, Player P WHERE I.Item_ID = C.Item_ID AND C.Char_ID = H.Char_ID AND H.Player_ID = P.Player_ID AND P.Player_ID = $player_id AND H.Char_ID = $char_id";
@@ -109,9 +95,9 @@ if ($db_conn) {
         }
         $characterResult = executePlainSQL("SELECT C.Char_ID, C.Char_Name, C.Char_Level, C.HP, C.MP, H.Hero_Class, H.Job, H.Quests_Completed FROM Characters C, Hero H, Player P WHERE C.Char_ID = H.Char_ID AND H.Player_ID = P.Player_ID AND P.Player_ID = $player_id AND C.Char_ID = $char_id");
         OCICommit($db_conn);
-        echo "<br><h2>Your Character<h2><br>";
+        echo "<br><h2>Your Character</h2><br>";
         echo "<table class='table table-bordered'>";
-        echo "<tr> <th>Char ID</th> <th>Name</th> <th>Level</th> <th>HP</th> <th>MP</th> <th>Class</th> <th>Job</th> <th>Quests Completed</th> <th>Quests</th></tr>";
+        echo "<tr> <th>Char ID</th> <th>Name</th> <th>Level</th> <th>HP</th> <th>MP</th> <th>Class</th> <th>Job</th> <th>Events Completed</th> <th>Quests</th></tr>";
         while ($row = OCI_Fetch_Array($characterResult, OCI_BOTH)) {
             echo "<tr>";
             echo "<td>" . $row['CHAR_ID'] . "</td>";
@@ -126,10 +112,9 @@ if ($db_conn) {
             echo "</tr>";
         }
         echo "</table>";
-
         $itemsResult = executePlainSQL("SELECT I.Item_ID, I.I_Name, I.I_Type, I.I_Level, I.I_Value FROM Item I, Carries C, Hero H, Player P WHERE I.Item_ID = C.Item_ID AND C.Char_ID = H.Char_ID AND H.Player_ID = P.Player_ID AND P.Player_ID = $player_id AND H.Char_ID = $char_id");
         OCICommit($db_conn);
-        echo "<br><h2>Your Items<h2><br>";
+        echo "<br><h2>Your Items</h2><br>";
         echo "<table class='table table-bordered'>";
         echo "<tr> <th>Item ID</th> <th>Name</th> <th>Type</th> <th>Level</th> <th>Value</th></tr>";
         while ($row = OCI_Fetch_Array($itemsResult, OCI_BOTH)) {

@@ -1,8 +1,7 @@
 <?php
 	ini_set('session.save_path', './');
 	session_start();
-	echo session_id();
-	print_r ($_SESSION);
+	echo "";
 ?>
 
 <!DOCTYPE html>
@@ -20,18 +19,13 @@
 <nav class="navbar navbar-inverse">
   <div class="container-fluid">
     <div class="navbar-header">
-      <a class="navbar-brand" href="http://www.ugrad.cs.ubc.ca/~v0i0b/SquishyBoots/login.php">SquishyBoots</a>
+      <a class="navbar-brand" href="http://www.ugrad.cs.ubc.ca/~s4i0b/SquishyBoots/login.php">SquishyBoots</a>
     </div>
     <ul class="nav navbar-nav">
-      <li><a href="http://www.ugrad.cs.ubc.ca/~v0i0b/SquishyBoots/user.php">Character Page</a></li>
+      <li><a href="http://www.ugrad.cs.ubc.ca/~s4i0b/SquishyBoots/user.php">Character Page</a></li>
     </ul>
   </div>
 </nav>
-
-<div id = 'user'>
-	    
-</div>
-
 
 <form action="user.php" method="POST" id="CreateHero">
     Character Name: <input type="text" name="charname" maxlength="20" required><br>
@@ -62,7 +56,7 @@
 include("db_execute.php");
 
 $success = True; //keep track of errors so it redirects the page only if there are no errors
-$db_conn = OCILogon("ora_y0w0b", "a21529145", "dbhost.ugrad.cs.ubc.ca:1522/ug");
+$db_conn = OCILogon("ora_s4i0b", "a31112148", "dbhost.ugrad.cs.ubc.ca:1522/ug");
 
 if ($db_conn) {
 	echo "<script>console.log( 'DB Connected' );</script>";
@@ -73,7 +67,7 @@ if ($db_conn) {
 	$charactersResult = executePlainSQL("SELECT H.Player_ID, C.Char_ID, C.Char_Name, H.Job,C.Char_Level FROM Characters C, Hero H, Player P WHERE C.Char_ID = H.Char_ID AND H.Player_ID = P.Player_ID AND P.Player_ID = $player_id");
 	OCICommit($db_conn);
 
-	echo "<br><h2>Choose your character<h2><br>";
+	echo "<br><h2>Choose your character</h2><br>";
 	echo "<table class='table table-bordered'>";
 	echo "<tr> <th>Player ID</th> <th>Char ID</th> <th>Name</th> <th>Job</th> <th>Level</th> <th>More Detail</th></tr>";
 	while ($row = OCI_Fetch_Array($charactersResult, OCI_BOTH)) {

@@ -1,8 +1,6 @@
 <?php
 	ini_set('session.save_path', './');
 	session_start();
-	echo session_id();
-	print_r ($_SESSION);
 ?>
 
 <!DOCTYPE html>
@@ -14,7 +12,7 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
-<body>
+<body background='pix/bg1.jpg'>
 
 <nav class="navbar navbar-inverse">
   <div class="container-fluid">
@@ -43,7 +41,7 @@ if ($db_conn) {
 	$questResult = executePlainSQL("SELECT Q.Q_ID, Q.q_name FROM Quest Q WHERE Q.Q_ID IN (SELECT Q2.Q_ID FROM Quest Q2 MINUS SELECT C.Q_id FROM Completes C WHERE C.Char_id = $char_id)");
 	OCICommit($db_conn);
 
-	echo "<br><h2>Choose a non-completed quest to view<h2><br>";
+	echo "<br><h2>Choose a non-completed quest to view</h2><br>";
 	echo "<table class='table table-bordered'>";
 	echo "<tr> <th>Quest ID</th> <th>Quest Name</th> <th>Quest Detail</th></tr>";
 	while ($row = OCI_Fetch_Array($questResult, OCI_BOTH)) {

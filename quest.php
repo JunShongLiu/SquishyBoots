@@ -1,8 +1,6 @@
 <?php
 	ini_set('session.save_path', './');
 	session_start();
-	echo session_id();
-	print_r ($_SESSION);
 ?>
 
 <!DOCTYPE html>
@@ -32,7 +30,7 @@
 include("db_execute.php");
 
 $success = True; //keep track of errors so it redirects the page only if there are no errors
-$db_conn = OCILogon("ora_y0w0b", "a21529145", "dbhost.ugrad.cs.ubc.ca:1522/ug");
+$db_conn = OCILogon("ora_s4i0b", "a31112148", "dbhost.ugrad.cs.ubc.ca:1522/ug");
 
 	if ($db_conn) {
 	$quest_id;
