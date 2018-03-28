@@ -59,7 +59,7 @@ This is the delete screen
 			$result = executePlainSQL($query);
 			OCICommit($db_conn);
 			oci_free_statement($result);
-			header('Location: http://www.ugrad.cs.ubc.ca/~s4i0b/SquishyBoots/admin_page.php');
+			header('Location: http://www.ugrad.cs.ubc.ca/~s4i0b/SquishyBoots/delete.php');
 		}
 		//Show the Character Table
 		else {
