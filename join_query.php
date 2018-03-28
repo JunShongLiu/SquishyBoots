@@ -17,7 +17,7 @@ This is the analysis screen
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
-<body background="pix/bg1.jpg">
+<body background="pix/bg2.jpg">
 
 
 <nav class="navbar navbar-inverse">
@@ -129,7 +129,7 @@ if ($db_conn) {
 		<th style="background-color:#D1F2EB"> Player ID </th>
 		<th> Hero Class </th>
 		<th> Job </th>
-		<th> Quests Completed </th>
+		<th> Events Completed </th>
 		<th style="background-color:#FCF3CF"> Character ID </th>'.'</tr>';
 		while ($row = OCI_Fetch_Array($hero, OCI_BOTH)) {
 			echo "<tr>";

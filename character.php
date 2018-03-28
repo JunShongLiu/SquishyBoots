@@ -97,7 +97,7 @@ if ($db_conn) {
         OCICommit($db_conn);
         echo "<br><h2>Your Character</h2><br>";
         echo "<table class='table table-bordered'>";
-        echo "<tr> <th>Char ID</th> <th>Name</th> <th>Level</th> <th>HP</th> <th>MP</th> <th>Class</th> <th>Job</th> <th>Quests Completed</th> <th>Quests</th></tr>";
+        echo "<tr> <th>Char ID</th> <th>Name</th> <th>Level</th> <th>HP</th> <th>MP</th> <th>Class</th> <th>Job</th> <th>Events Completed</th> <th>Quests</th></tr>";
         while ($row = OCI_Fetch_Array($characterResult, OCI_BOTH)) {
             echo "<tr>";
             echo "<td>" . $row['CHAR_ID'] . "</td>";

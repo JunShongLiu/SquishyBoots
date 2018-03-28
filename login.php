@@ -24,7 +24,7 @@ This is the login screen
 	<div class="page-header text-center">
 		<h1>SquishyBoots</h1>
 		<img src='pix/logo.jpg'>
-		//<p> We need a logo! </p>
+		<!--<p> We need a logo! </p>-->
 	</div>
 
 
