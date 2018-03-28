@@ -106,8 +106,9 @@ if ($db_conn) {
 
 			unset($_SESSION['Div_Query']);
 		}
+	}
 
-		echo "<br><h3>Tables for Verification of Division Query</h3>";
+	echo "<br><h3>Tables for Verification of Division Query</h3>";
 
 		$questResult = executePlainSQL("select * from Quest");
 		OCICommit($db_conn);
@@ -141,7 +142,6 @@ if ($db_conn) {
 			//echo $row[0];
 		}
 		echo "</table><br>";
-	}
 }
 
 ?>
