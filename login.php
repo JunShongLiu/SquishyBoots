@@ -37,7 +37,7 @@ This is the login screen
                         <form action="login.php" method="GET" autocomplete="off">
                         	Email
                             <div class="form-group">
-                                <input type="text" class="form-control" name="email" width="20">
+                                <input type="text" class="form-control" name="email" width="10" required>
                             </div>
                             <input type="submit" id="sendlogin" value="Login" name="login" class="btn btn-primary">
                         </form>
