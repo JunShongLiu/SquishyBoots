@@ -129,7 +129,7 @@ if ($db_conn) {
 		<th style="background-color:#D1F2EB"> Player ID </th>
 		<th> Hero Class </th>
 		<th> Job </th>
-		<th> Quests Completed </th>
+		<th> Events Completed </th>
 		<th style="background-color:#FCF3CF"> Character ID </th>'.'</tr>';
 		while ($row = OCI_Fetch_Array($hero, OCI_BOTH)) {
 			echo "<tr>";
