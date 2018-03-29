@@ -115,8 +115,12 @@ if ($db_conn){
 	$selected_columns = implode(', ', $columns);
 	$row = $_POST['row'];
 	$value = $_POST['value'];
-
-	$_SESSION["Query"] = "select $selected_columns from $table where $row = $value";
+	
+	if (is_string($value)) {
+	    $_SESSION["Query"] = "select $selected_columns from $table where $row = '$value'";
+	} else {
+	    $_SESSION["Query"] = "select $selected_columns from $table where $row = $value";
+	}
 	$_SESSION["Columns"] = $columns;
 	session_write_close();
 	header("location: formhandle2.php");
