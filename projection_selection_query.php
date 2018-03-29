@@ -77,7 +77,7 @@ Columns:
 
 <h3> Selection </h3>
 Selection: <select name="row" class="form-control" size="5" id="text-three"><option>Please choose from above</option></select><br>
-Value: <input type="text" class="form-control" name="value" pattern="[:*,*'*(*)*!*@*.*a-zA-Z0-9 ]+"><br>
+Value: <input type="text" class="form-control" name="value" pattern="[:*,*(*)*!*@*.*a-zA-Z0-9 ]+"><br>
 <td colspan="2" align="center">
 <input type="submit" value="Execute Projection" class="btn btn-primary" name="projection">
 <br><br>
@@ -93,7 +93,7 @@ Value: <input type="text" class="form-control" name="value" pattern="[:*,*'*(*)*
 include("db_execute.php");
 
 $success = True; //keep track of errors so it redirects the page only if there are no errors
-$db_conn = OCILogon("ora_v0i0b", "a35223149", "dbhost.ugrad.cs.ubc.ca:1522/ug");
+$db_conn = OCILogon("ora_s4i0b", "a31112148", "dbhost.ugrad.cs.ubc.ca:1522/ug");
 
 if ($db_conn){
     echo "<script>console.log( 'DB Connected' );</script>";
@@ -117,7 +117,7 @@ if ($db_conn){
 	$row = $_POST['row'];
 	$value = $_POST['value'];
 	
-	if (is_string($value)) {
+	if (!is_numeric($value)) {
 	    $_SESSION["Query"] = "select $selected_columns from $table where $row = '$value'";
 	} else {
 	    $_SESSION["Query"] = "select $selected_columns from $table where $row = $value";
@@ -150,8 +150,9 @@ if ($db_conn){
                 //echo $row[0];
             }
             echo "</table><br>";
-
-            unset($_SESSION['Pro_Query']);
+	    
+	    unset($_SESSION['Query']);
+	    unset($_SESSION['Columns']);
         }
     }
 }
