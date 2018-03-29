@@ -20,7 +20,8 @@
       <a class="navbar-brand" href="http://www.ugrad.cs.ubc.ca/~s4i0b/SquishyBoots/login.php">SquishyBoots</a>
     </div>
     <ul class="nav navbar-nav">
-      <li class="active"><a href="http://www.ugrad.cs.ubc.ca/~s4i0b/SquishyBoots/delete.php">Delete Query</a></li>
+      <li class="active"><a href="http://www.ugrad.cs.ubc.ca/~s4i0b/SquishyBoots/projection_selection_query.php">Projection & Selection Query</a></li>
+      <li><a href="http://www.ugrad.cs.ubc.ca/~s4i0b/SquishyBoots/delete.php">Delete Query</a></li>
       <li><a href="http://www.ugrad.cs.ubc.ca/~s4i0b/SquishyBoots/division_query.php">Division Query</a></li>
       <li><a href="http://www.ugrad.cs.ubc.ca/~s4i0b/SquishyBoots/join_query.php">Join Query</a></li>
       <li><a href="http://www.ugrad.cs.ubc.ca/~s4i0b/SquishyBoots/update_query.php">Update Query</a></li>
@@ -37,8 +38,8 @@
 
 <p>Update a character level</p>
 <form action="update_query.php" method="POST" id="update" autocomplete="off">
-<input type="text" class="form-control" name="char_id" placeholder="Enter Character ID" width="5">
-<input type="text" class="form-control" name="char_level" placeholder="Enter New Character Level (Must be greater than 0!)" width="5">
+<input type="number" min="1" class="form-control" name="char_id" placeholder="Enter Character ID" width="5">
+<input type="number" min="1" class="form-control" name="char_level" placeholder="Enter New Character Level" width="5">
 <input type="submit" value="Execute Query" class="btn btn-primary" name="update">
 </form>
 

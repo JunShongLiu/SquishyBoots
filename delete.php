@@ -26,7 +26,8 @@ This is the delete screen
       <a class="navbar-brand" href="http://www.ugrad.cs.ubc.ca/~s4i0b/SquishyBoots/login.php">SquishyBoots</a>
     </div>
     <ul class="nav navbar-nav">
-      <li class="active"><a href="http://www.ugrad.cs.ubc.ca/~s4i0b/SquishyBoots/delete.php">Delete Query</a></li>
+      <li class="active"><a href="http://www.ugrad.cs.ubc.ca/~s4i0b/SquishyBoots/projection_selection_query.php">Projection & Selection Query</a></li>
+      <li><a href="http://www.ugrad.cs.ubc.ca/~s4i0b/SquishyBoots/delete.php">Delete Query</a></li>
       <li><a href="http://www.ugrad.cs.ubc.ca/~s4i0b/SquishyBoots/division_query.php">Division Query</a></li>
       <li><a href="http://www.ugrad.cs.ubc.ca/~s4i0b/SquishyBoots/join_query.php">Join Query</a></li>
       <li><a href="http://www.ugrad.cs.ubc.ca/~s4i0b/SquishyBoots/update_query.php">Update Query</a></li>
@@ -40,7 +41,7 @@ This is the delete screen
                         <form action="delete.php" method="POST" autocomplete="off">
                         	Delete Player
                             <div class="form-group">
-                                <input type="text" class="form-control" name="player_id" placeholder="Enter Player ID" width="10">
+                                <input type="number" min='1' class="form-control" name="player_id" placeholder="Enter Player ID" width="10">
                             </div>
                             <input type="submit" id="deletePlayer" value="Delete" name="delete" class="btn btn-primary">
                         </form>
@@ -59,7 +60,7 @@ This is the delete screen
 			$result = executePlainSQL($query);
 			OCICommit($db_conn);
 			oci_free_statement($result);
-			header('Location: http://www.ugrad.cs.ubc.ca/~s4i0b/SquishyBoots/admin_page.php');
+			header('Location: http://www.ugrad.cs.ubc.ca/~s4i0b/SquishyBoots/delete.php');
 		}
 		//Show the Character Table
 		else {

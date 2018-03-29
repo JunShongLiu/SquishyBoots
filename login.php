@@ -37,10 +37,10 @@ This is the login screen
                         <form action="login.php" method="GET" autocomplete="off">
                         	Email
                             <div class="form-group">
-                                <input type="text" class="form-control" name="email" width="10" required>
+                                <input type="email" class="form-control" name="email" width="10" required>
                             </div>
                             <input type="submit" id="sendlogin" value="Login" name="login" class="btn btn-primary">
-                        </form>
+                        </form> <br>
 						<form action = "register.php">
     			<button type="submit" class="btn btn-primary">Register</button>
     			</form>

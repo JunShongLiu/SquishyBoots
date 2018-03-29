@@ -163,10 +163,10 @@ insert into Quest
 values(2, 'Path to the Past', 2, 10);
 
 insert into Quest 
-values(3, 'Keeny’s Research on Neo Huroid!', 4, 5);
+values(3, 'Keenys Research on Neo Huroid!', 4, 5);
 
 insert into Quest 
-values(4, 'Keeny’s Research on D.Roid!!', 5, 6);
+values(4, 'Keenys Research on D.Roid!!', 5, 6);
 
 insert into Quest 
 values(5, 'Runaway Brother', 3, 3);

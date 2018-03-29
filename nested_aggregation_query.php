@@ -26,7 +26,8 @@ This is the nested aggregation screen screen
       <a class="navbar-brand" href="http://www.ugrad.cs.ubc.ca/~s4i0b/SquishyBoots/login.php">SquishyBoots</a>
     </div>
     <ul class="nav navbar-nav">
-      <li class="active"><a href="http://www.ugrad.cs.ubc.ca/~s4i0b/SquishyBoots/delete.php">Delete Query</a></li>
+      <li class="active"><a href="http://www.ugrad.cs.ubc.ca/~s4i0b/SquishyBoots/projection_selection_query.php">Projection & Selection Query</a></li>
+      <li><a href="http://www.ugrad.cs.ubc.ca/~s4i0b/SquishyBoots/delete.php">Delete Query</a></li>
       <li><a href="http://www.ugrad.cs.ubc.ca/~s4i0b/SquishyBoots/division_query.php">Division Query</a></li>
       <li><a href="http://www.ugrad.cs.ubc.ca/~s4i0b/SquishyBoots/join_query.php">Join Query</a></li>
       <li><a href="http://www.ugrad.cs.ubc.ca/~s4i0b/SquishyBoots/update_query.php">Update Query</a></li>
@@ -46,21 +47,25 @@ This is the nested aggregation screen screen
     <button type="submit" value="Submit">Submit</button>
 </form>
 </div> -->
-<p>Find Most Active or Least Active Hero Characters</p>
+<p>Find Most Active or Least Active Player Based On Their Average of Events Completed</p>
 <form action="nested_aggregation_query.php" method="GET" id="MaxNestedAggregationForm">
 <input type="submit" value="Most Active" class="btn btn-primary" name="maxNestedAggregation">
 </form>
+
+<br>
 
 <form action="nested_aggregation_query.php" method="GET" id="MinNestedAggregationForm">
 <input type="submit" value="Least Active" class="btn btn-primary" name="minNestedAggregation">
 </form>
 
-<p>Add a quest completed by a player by supplying a player id and a quest id</p>
-<form action="nested_aggregation_query.php" method="POST" id="InsertDivision" autocomplete="off">
-<input type="text" class="form-control" name="player_id" placeholder="Enter Player ID" width="5">
-<input type="text" class="form-control" name="quest_id" placeholder="Enter Quest ID" width="5">
-<input type="submit" value="Execute Query" class="btn btn-primary" name="InsertDivision">
+<br>
+
+<p>Find Player With the Most Events Completed Across All Their Characters</p>
+<form action="nested_aggregation_query.php" method="GET" id="OtherNestedAggregationForm">
+<input type="submit" value="Most Events Completed" class="btn btn-primary" name="otherNestedAggregation">
 </form>
+
+
 
 <?php
 include("db_execute.php");
@@ -73,33 +78,27 @@ if ($db_conn) {
     if(array_key_exists('maxNestedAggregation', $_GET)){
         echo "<script>console.log( 'Max Button Pressed' );</script>";
 
-        $_SESSION["NestedAgg_Query"] = "SELECT MAX(AVG(Quests_Completed)) FROM Hero GROUP BY Player_ID";
+        $_SESSION["NestedAgg_Query"] = "select Player_ID, Username, Agg from (select P.player_id, P.Username, avg(Quests_Completed) as Agg from hero H, player P where H.Player_ID = P.Player_ID group by P.player_id, P.Username) Agg where Agg = (SELECT MAX(AVG(Quests_Completed)) FROM Hero GROUP BY Player_ID)";
         
         session_write_close();
         header("location: nested_aggregation_query.php");
     }
     else if(array_key_exists('minNestedAggregation', $_GET)){
-	echo "<script>console.log( 'Min Button Pressed' );</script>";
+		echo "<script>console.log( 'Min Button Pressed' );</script>";
 
-	$_SESSION["NestedAgg_Query"] = "SELECT MIN(AVG(Quests_Completed)) FROM Hero GROUP BY Player_ID";
+		$_SESSION["NestedAgg_Query"] = "select Player_ID, Username, Agg from (select P.player_id, P.Username, avg(Quests_Completed) as Agg from hero H, player P where H.Player_ID = P.Player_ID group by P.player_id, P.Username) Agg where Agg = (SELECT MIN(AVG(Quests_Completed)) FROM Hero GROUP BY Player_ID)";
 
-	session_write_close();
-	header("location: nested_aggregation_query.php");
+		session_write_close();
+		header("location: nested_aggregation_query.php");
     }
-    else if(array_key_exists("InsertDivision", $_POST)){
-        $tuple = array (
-                ":bind1" => $_POST['player_id'],
-                ":bind2" => $_POST['quest_id']
-        );
-        $alltuples = array (
-            $tuple
-        );
-        executeBoundSQL("insert into Completes values (:bind1, :bind2)", $alltuples);
-        OCICommit($db_conn);
-        if ($_POST && $success) {
-            header("location: nested_aggregation_query.php");
-        }
-    }
+	else if(array_key_exists('otherNestedAggregation', $_GET)){
+		echo "<script>console.log( 'Max Button Pressed' );</script>";
+		
+		$_SESSION["NestedAgg_Query"] = "select Player_ID, Username, Agg from (select P.player_id, P.Username, sum(Quests_Completed) as Agg from hero H, player P where H.Player_ID = P.Player_ID group by P.player_id, P.Username) Agg where Agg = (SELECT MAX(SUM(Quests_Completed)) FROM Hero GROUP BY Player_ID)";
+		
+		session_write_close();
+		header("location: nested_aggregation_query.php");
+	}
     else {
 
         if(isset($_SESSION["NestedAgg_Query"])){
@@ -108,48 +107,38 @@ if ($db_conn) {
             OCICommit($db_conn);
 
             echo "<br><h4>Result from Nested Aggregation Query</h4><br>";
+			echo "$query";
             echo "<table class='table table-bordered'>";
-            echo "<tr><th>Events Completed</th></tr>";
+            echo "<tr><th>Player_ID</th><th>Player Name</th><th>Average Events Completed</th></tr>";
             while ($row = OCI_Fetch_Array($result, OCI_BOTH)) {
-                echo "<tr><td>" . $row["0"] . "</td></tr>";
-                //echo $row[0];
+                echo "<tr><td>" . $row["0"] . "</td><td>" . $row["1"] . "</td><td>" . $row["2"] . "</td></tr>";
+				//echo $row[0];
             }
             echo "</table><br>";
 
             unset($_SESSION['NestedAgg_Query']);
         }
 
-        echo "<br><h3>Tables for Verification of Division Query</h3>";
+        echo "<br><h3>Tables for Verification of Nested Aggregation Query</h3>";
 
-        $questResult = executePlainSQL("select * from Quest");
+        $avgResult = executePlainSQL("select P.player_id, P.Username, avg(Quests_Completed) from hero H, player P where H.Player_ID = P.Player_ID group by P.player_id, P.Username");
         OCICommit($db_conn);
-        echo "<br>Quest Table<br>";
+        echo "<br>Average Events Completed Table<br>";
         echo "<table class='table table-bordered'>";
-        echo "<tr><th>Quest ID</th><th>Quest Name</th><th>Location ID</th><th>Difficulty</th></tr>";
-        while ($row = OCI_Fetch_Array($questResult, OCI_BOTH)) {
-            echo "<tr><td>" . $row["Q_ID"] . "</td><td>" . $row["Q_NAME"] . "</td><td>" . $row["LOC_ID"] . "</td><td>" . $row["DIFFICULTY"] . "</td></tr>";
+        echo "<tr><th>Player ID</th><th>Player Name</th><th>Average Events Completed</th></tr>";
+        while ($row = OCI_Fetch_Array($avgResult, OCI_BOTH)) {
+            echo "<tr><td>" . $row["0"] . "</td><td>" . $row["1"] . "</td><td>" . $row["2"] . "</td></tr>";
             //echo $row[0];
         }
         echo "</table><br>";
 
-        $charResult = executePlainSQL("select * from Characters");
+        $charResult = executePlainSQL("select Player_ID, Char_ID, Quests_Completed from Hero");
         OCICommit($db_conn);
-        echo "<br>Quest Table<br>";
+        echo "<br>Hero Table<br>";
         echo "<table class='table table-bordered'>";
-        echo "<tr><th>Character Name</th><th>Character Level</th><th>Character ID</th></tr>";
+        echo "<tr><th>Player ID</th><th>Character ID</th><th>Events Completed</th></tr>";
         while ($row = OCI_Fetch_Array($charResult, OCI_BOTH)) {
-            echo "<tr><td>" . $row["CHAR_NAME"] . "</td><td>" . $row["CHAR_LEVEL"] . "</td><td>" . $row["CHAR_ID"] . "</td></tr>";
-            //echo $row[0];
-        }
-        echo "</table><br>";
-
-        $charResult = executePlainSQL("select * from Completes");
-        OCICommit($db_conn);
-        echo "<br>Character Complete Quest Table<br>";
-        echo "<table class='table table-bordered'>";
-        echo "<tr><th>Character ID</th><th>Quest ID</th></tr>";
-        while ($row = OCI_Fetch_Array($charResult, OCI_BOTH)) {
-            echo "<tr><td>" . $row["CHAR_ID"] . "</td><td>" . $row["Q_ID"] . "</td></tr>";
+            echo "<tr><td>" . $row["PLAYER_ID"] . "</td><td>" . $row["CHAR_ID"] . "</td><td>" . $row["QUESTS_COMPLETED"] . "</td></tr>";
             //echo $row[0];
         }
         echo "</table><br>";

@@ -26,7 +26,8 @@ This is the division screen
       <a class="navbar-brand" href="http://www.ugrad.cs.ubc.ca/~s4i0b/SquishyBoots/login.php">SquishyBoots</a>
     </div>
     <ul class="nav navbar-nav">
-      <li class="active"><a href="http://www.ugrad.cs.ubc.ca/~s4i0b/SquishyBoots/delete.php">Delete Query</a></li>
+      <li class="active"><a href="http://www.ugrad.cs.ubc.ca/~s4i0b/SquishyBoots/projection_selection_query.php">Projection & Selection Query</a></li>
+      <li><a href="http://www.ugrad.cs.ubc.ca/~s4i0b/SquishyBoots/delete.php">Delete Query</a></li>
       <li><a href="http://www.ugrad.cs.ubc.ca/~s4i0b/SquishyBoots/division_query.php">Division Query</a></li>
       <li><a href="http://www.ugrad.cs.ubc.ca/~s4i0b/SquishyBoots/join_query.php">Join Query</a></li>
       <li><a href="http://www.ugrad.cs.ubc.ca/~s4i0b/SquishyBoots/update_query.php">Update Query</a></li>
@@ -53,8 +54,8 @@ This is the division screen
 
 <p>Add a quest completed by a player by supplying a player id and a quest id</p>
 <form action="division_query.php" method="POST" id="InsertDivision" autocomplete="off">
-<input type="text" class="form-control" name="player_id" placeholder="Enter Player ID" width="5">
-<input type="text" class="form-control" name="quest_id" placeholder="Enter Quest ID" width="5">
+<input type="number" min="1" class="form-control" name="player_id" placeholder="Enter Player ID" width="5">
+<input type="number" min="1" class="form-control" name="quest_id" placeholder="Enter Quest ID" width="5">
 <input type="submit" value="Execute Query" class="btn btn-primary" name="InsertDivision">
 </form>
 
@@ -106,8 +107,9 @@ if ($db_conn) {
 
 			unset($_SESSION['Div_Query']);
 		}
+	}
 
-		echo "<br><h3>Tables for Verification of Division Query</h3>";
+	echo "<br><h3>Tables for Verification of Division Query</h3>";
 
 		$questResult = executePlainSQL("select * from Quest");
 		OCICommit($db_conn);
@@ -141,7 +143,6 @@ if ($db_conn) {
 			//echo $row[0];
 		}
 		echo "</table><br>";
-	}
 }
 
 ?>
