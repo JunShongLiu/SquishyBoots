@@ -5,6 +5,7 @@ This is the analysis screen
 <?php
 	ini_set('session.save_path', './');
 	session_start();
+	echo session_id();
 ?>
 
 <!DOCTYPE html>
@@ -148,7 +149,9 @@ if ($db_conn) {
 		$player = executePlainSQL("select * from player order by player_id");
 		$hero = executePlainSQL("select * from hero order by player_id");
 		$character = executePlainSQL("select * from characters order by char_id");
+		$enemy = executePlainSQL("select * from enemy order by char_id");
 		$char_id = array();
+		$enemy_id = array();
 
 		echo "<br><h3>Tables for Verification of Join Query</h3>";
 		
@@ -190,6 +193,21 @@ if ($db_conn) {
 		}
 		echo "</table>";
 
+		// Display entries of enemies
+		echo "<br>Table of Enemies<br>";
+		echo "<table border = '1'>";
+		echo '<tr>
+		<th style="background-color:#EC7063"> Enemy ID </th>
+		<th> Enemy EXP </th>'.'</tr>';
+		while ($row = OCI_Fetch_Array($enemy, OCI_BOTH)) {
+			echo "<tr>";
+			echo '<td style="background-color:#EC7063">' . $row['CHAR_ID'] . "</td>";
+			array_push($enemy_id, $row['CHAR_ID']);
+			echo "<td>" . $row['ENEMY_EXP'] . "</td>";
+			echo "</tr>";
+		}
+		echo "</table>";
+
 		// Display entries of characers
 		//echo "$char_id[0] . $char_id[1] . $char_id[2] . $char_id[3]"; 
 		echo "<br>Table of Characters<br>";
@@ -204,7 +222,7 @@ if ($db_conn) {
 			echo "<tr>";
 			if(in_array($row['CHAR_ID'], $char_id, true)){
 			echo '<td style="background-color:#FCF3CF">' . $row['CHAR_ID'] . "</td>";
-			} else { echo "<td>" . $row['CHAR_ID'] . "</td>"; }
+			} else { echo '<td style="background-color:#EC7063">' . $row['CHAR_ID'] . "</td>"; }
 			echo "<td>" . $row['HP'] . "</td>";
 			echo "<td>" . $row['MP'] . "</td>";
 			echo "<td>" . $row['CHAR_NAME'] . "</td>";
