@@ -1,0 +1,5 @@
+<option>HP</option>
+<option>MP</option>
+<option>Char_Name</option>
+<option>Char_Level</option>
+<option>Char_ID</option>
