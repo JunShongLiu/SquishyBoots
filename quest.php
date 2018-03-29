@@ -46,13 +46,16 @@ $db_conn = OCILogon("ora_s4i0b", "a31112148", "dbhost.ugrad.cs.ubc.ca:1522/ug");
 	$questQuery = executePlainSQL("select * from Quest natural join Location where Q_ID = $quest_id");
 	OCICommit($db_conn);
 
+	$random = rand(1, 5);
+	$image = "pix/q" . $random . ".png";
+	echo $image;
 	while ($row = OCI_Fetch_Array($questQuery, OCI_BOTH)) {
 		echo "<h2>" . $row['Q_NAME'] . "</h2>";
 		echo "<p>Difficulty Level: " . $row['DIFFICULTY'] . "</p><br><br>";
 		echo "<h3>" . $row['ISLAND'] . "</h3>";
 		echo "<h4>" . $row['CITY'] . "</h4>";
 		echo "<h5>" . $row["L_NAME"] . "</h5>";
-		echo "<p>Insert Image</p><br><br>";
+		echo "<img src=$image><br><br>";
 	}
 
 	$enemiesQuery = executePlainSQL("select e.Char_ID, c.Char_Name, c.HP, c.MP, c.Char_Level, e.Enemy_Exp from Characters c, Enemy e, Has h where c.Char_ID = e.Char_ID and e.Char_ID = h.Enemy_id and h.Q_id = $quest_id");
