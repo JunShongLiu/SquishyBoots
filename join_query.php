@@ -23,7 +23,7 @@ This is the analysis screen
 <nav class="navbar navbar-inverse">
   <div class="container-fluid">
     <div class="navbar-header">
-      <a class="navbar-brand" href="#">SquishyBoots</a>
+      <a class="navbar-brand" href="http://www.ugrad.cs.ubc.ca/~s4i0b/SquishyBoots/login.php">SquishyBoots</a>
     </div>
     <ul class="nav navbar-nav">
       <li class="active"><a href="http://www.ugrad.cs.ubc.ca/~s4i0b/SquishyBoots/delete.php">Delete Query</a></li>
@@ -43,8 +43,13 @@ This is the analysis screen
 
 <!-- Calvin's Button -->
 <p>Find the heroes name, class and job of each player</p>
-<form action="join_query.php" method="GET" id="JoinForm">
-<input type="submit" value="Execute Query" class="btn btn-primary" name="join">
+<form action="join_query.php" method="GET" id="HeroForm">
+<input type="submit" value="Execute Query" class="btn btn-primary" name="hero">
+</form>
+
+<p>Find enemy type of each quest</p>
+<form action="join_query.php" method="GET" id="EnmyForm">
+<input type="submit" value="Execute Query" class="btn btn-primary" name="enmy">
 </form>
 
 </body>
@@ -56,26 +61,33 @@ $success = True; //keep track of errors so it redirects the page only if there a
 $db_conn = OCILogon("ora_s4i0b", "a31112148", "dbhost.ugrad.cs.ubc.ca:1522/ug");
 if ($db_conn) {
 	echo "<script>console.log( 'DB Connected' );</script>";
-	if(array_key_exists('join', $_GET)){
+	if(array_key_exists('hero', $_GET)){
 		//echo "<br> JOIN <br>";
 		echo "<script>console.log( 'Button Pressed' );</script>";
-		$_SESSION["Join_Query"] = "select player_id, char_name, hero_class, job from player p natural join hero h natural join characters c order by player_id";
+		$_SESSION["Hero_Query"] = "select player_id, char_name, hero_class, job from player p natural join hero h natural join characters c order by player_id";
+		
+		session_write_close();
+		header("location: join_query.php");
+	}
+	else if (array_key_exists('enmy', $_GET)){
+		echo "<script>console.log( 'Button Pressed' );</script>";
+		$_SESSION["Enmy_Query"] = "select q.q_id, q.q_name, c.char_name, e.enemy_exp from (((quest q inner join has h on q.q_id = h.q_id) inner join characters c on h.enemy_id = c.char_id) inner join enemy e on e.char_id = c.char_id) order by q.q_id";
 		
 		session_write_close();
 		header("location: join_query.php");
 	}
 	else {
-		if(isset($_SESSION["Join_Query"])){
+		if(isset($_SESSION["Hero_Query"])){
 			//echo "<br> JOIN <br>";
-			$query = $_SESSION['Join_Query'];
+			$query = $_SESSION['Hero_Query'];
 			//$createView = executePlainSQL("create view heroCharacter (char_name, hero_class, job, player_id) AS
 			//				select char_name, hero_class, job, player_id from characters c natural join hero h
 			//				");
 		
-			$result = executePlainSQL("select player_id, char_name, hero_class, job from player p natural join hero h natural join characters c order by player_id");
+			$hero = executePlainSQL("select player_id, char_name, hero_class, job from player p natural join hero h natural join characters c order by player_id");
 			OCICommit($db_conn);
 			
-			echo "<br><h3>Result from Join Query<h3><br>";
+			echo "<br><h3>Characters<h3><br>";
 			//echo $result[1];
 			echo "<table class = 'table table-bordered'>
 			<tr>
@@ -85,7 +97,7 @@ if ($db_conn) {
 			<th>Job</th>
 			</tr>";
 			//echo "<tr><th>Name</th></tr>";
-			while ($row = OCI_Fetch_Array($result, OCI_BOTH)) {
+			while ($row = OCI_Fetch_Array($hero, OCI_BOTH)) {
 				//echo "<tr><td>" .$row["PLAYER_ID"] .", ". $row["CHAR_NAME"] ." , ". $row["HERO_CLASS"] .", ". $row["JOB"] . "</td></tr>";
 				//echo "$row[0] . $row[1] . $row[2] . $row[3] . $row[4] . $row[5]<br>"; 
 				echo"<tr>";
@@ -96,8 +108,43 @@ if ($db_conn) {
 				echo"</tr>";
 			}
 			echo"</table>";
-			unset($_SESSION['Join_Query']);
+			unset($_SESSION['Hero_Query']);
 		}
+
+		if(isset($_SESSION["Enmy_Query"])){
+			//echo "<br> JOIN <br>";
+			$query2 = $_SESSION['Enmy_Query'];
+			//$createView = executePlainSQL("create view heroCharacter (char_name, hero_class, job, player_id) AS
+			//				select char_name, hero_class, job, player_id from characters c natural join hero h
+			//				");
+		
+			$enemy = executePlainSQL("select q.q_id, q.q_name, c.char_name, e.enemy_exp from (((quest q inner join has h on q.q_id = h.q_id) inner join characters c on h.enemy_id = c.char_id) inner join enemy e on e.char_id = c.char_id) order by q.q_id");
+			OCICommit($db_conn);
+			
+			echo "<br><h3>Enemies<h3><br>";
+			//echo $result[1];
+			echo "<table class = 'table table-bordered'>
+			<tr>
+			<th>Quest ID</th>
+			<th>Quest Name</th>
+			<th>Enemy Name</th>
+			<th>Exp</th>
+			</tr>";
+			//echo "<tr><th>Name</th></tr>";
+			while ($row = OCI_Fetch_Array($enemy, OCI_BOTH)) {
+				//echo "<tr><td>" .$row["PLAYER_ID"] .", ". $row["CHAR_NAME"] ." , ". $row["HERO_CLASS"] .", ". $row["JOB"] . "</td></tr>";
+				//echo "$row[0] . $row[1] . $row[2] . $row[3] . $row[4] . $row[5]<br>"; 
+				echo"<tr>";
+				echo"<td>" . $row['Q_ID'] . "</td>";
+				echo"<td>" . $row['Q_NAME'] . "</td>";
+				echo"<td>" . $row['CHAR_NAME'] . "</td>";
+				echo"<td>" . $row['ENEMY_EXP'] . "</td>";
+				echo"</tr>";
+			}
+			echo"</table>";
+			unset($_SESSION['Enmy_Query']);
+		}		
+
 		$player = executePlainSQL("select * from player order by player_id");
 		$hero = executePlainSQL("select * from hero order by player_id");
 		$character = executePlainSQL("select * from characters order by char_id");
