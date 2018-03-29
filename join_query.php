@@ -157,7 +157,7 @@ if ($db_conn) {
 		
 		// Display entries of player
 		echo "<br>Table of Players<br>";
-		echo "<table border = '1'>";
+		echo "<table class='table table-bordered' border = '1'>";
 		echo '<tr>
 		<th> Username </th>
 		<th> E-mail </th>
@@ -174,7 +174,7 @@ if ($db_conn) {
 
 		// Display entries of hero
 		echo "<br>Table of Heroes<br>";
-		echo "<table border = '1'>";
+		echo "<table class='table table-bordered' border = '1'>";
 		echo '<tr>
 		<th style="background-color:#D1F2EB"> Player ID </th>
 		<th> Hero Class </th>
@@ -195,7 +195,7 @@ if ($db_conn) {
 
 		// Display entries of enemies
 		echo "<br>Table of Enemies<br>";
-		echo "<table border = '1'>";
+		echo "<table class='table table-bordered' border = '1'>";
 		echo '<tr>
 		<th style="background-color:#EC7063"> Enemy ID </th>
 		<th> Enemy EXP </th>'.'</tr>';
@@ -211,7 +211,7 @@ if ($db_conn) {
 		// Display entries of characers
 		//echo "$char_id[0] . $char_id[1] . $char_id[2] . $char_id[3]"; 
 		echo "<br>Table of Characters<br>";
-		echo "<table border = '1'>";
+		echo "<table class='table table-bordered' border = '1'>";
 		echo '<tr>
 		<th style="background-color:#FCF3CF"> Character ID </th>
 		<th> HP </th>
