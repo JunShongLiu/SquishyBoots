@@ -48,7 +48,6 @@ $db_conn = OCILogon("ora_s4i0b", "a31112148", "dbhost.ugrad.cs.ubc.ca:1522/ug");
 
 	$random = rand(1, 5);
 	$image = "pix/q" . $random . ".png";
-	echo $image;
 	while ($row = OCI_Fetch_Array($questQuery, OCI_BOTH)) {
 		echo "<h2>" . $row['Q_NAME'] . "</h2>";
 		echo "<p>Difficulty Level: " . $row['DIFFICULTY'] . "</p><br><br>";
