@@ -99,7 +99,7 @@ CREATE TABLE Carries(
     PRIMARY KEY(Char_id, Item_id),
 	CONSTRAINT CHK_CAR CHECK (Char_id > 0 AND Item_id > 0),
     FOREIGN KEY(Char_id) REFERENCES Hero ON DELETE CASCADE,
-    FOREIGN KEY(Item_id) REFERENCES Item
+    FOREIGN KEY(Item_id) REFERENCES Item ON DELETE CASCADE
 );
 
 grant select on Carries to public;

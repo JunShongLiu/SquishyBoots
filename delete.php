@@ -68,14 +68,32 @@ This is the delete screen
 		}
 		//Show the Character Table
 		else {
-			$result = executePlainSql("select Username from Player");
+			$result = executePlainSql("select * from Player");
 			OCICommit($db_conn);
 			
 			echo "<br>Players<br>";
 			echo "<table class='table table-bordered'>";
-			echo "<tr><th>Username</th></tr>";
+			echo "<tr><th>Username</th><th>Email</th><th>Player_ID</th></tr>";
 			while ($row = OCI_Fetch_Array($result, OCI_BOTH)) {
-				echo "<tr><td>" . $row["USERNAME"] . "</td></tr>";
+				echo "<tr><td>" . $row["USERNAME"] . "</td>";
+				echo "<td>" . $row["EMAIL"] . "</td>";
+				echo "<td>" . $row["PLAYER_ID"] . "</td></tr>";
+				//echo $row[0];
+			}
+			echo "</table>";
+
+			$result = executePlainSql("select * from Hero");
+			OCICommit($db_conn);
+			
+			echo "<br>Heroes<br>";
+			echo "<table class='table table-bordered'>";
+			echo "<tr><th>Hero Class</th><th>Job</th><th>Events Completed</th><th>Player ID</th><th>Char ID</th></tr>";
+			while ($row = OCI_Fetch_Array($result, OCI_BOTH)) {
+				echo "<tr><td>" . $row["HERO_CLASS"] . "</td>";
+				echo "<td>" . $row["JOB"] . "</td>";
+				echo "<td>" . $row["QUEST_COMPLETED"] . "</td>";
+				echo "<td>" . $row["PLAYER_ID"] . "</td>";
+				echo "<td>" . $row["CHAR_ID"] . "</td></tr>";
 				//echo $row[0];
 			}
 			echo "</table>";
