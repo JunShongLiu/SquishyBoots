@@ -23,7 +23,7 @@
       <li><a href="http://www.ugrad.cs.ubc.ca/~s4i0b/SquishyBoots/character.php">Character Details</a></li>
     </ul>
     <div style = 'float:right;'>
-    <form action="user.php" method="POST" id="Logout" class ="navbar-nav">
+    <form action="character.php" method="POST" id="Logout" class ="navbar-nav">
 <input type="submit" value="Log Out" class="btn btn-primary" name="logout"></div>
   </div>
 </nav>
