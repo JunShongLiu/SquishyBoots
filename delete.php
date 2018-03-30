@@ -91,7 +91,7 @@ This is the delete screen
 			while ($row = OCI_Fetch_Array($result, OCI_BOTH)) {
 				echo "<tr><td>" . $row["HERO_CLASS"] . "</td>";
 				echo "<td>" . $row["JOB"] . "</td>";
-				echo "<td>" . $row["QUEST_COMPLETED"] . "</td>";
+				echo "<td>" . $row["QUESTS_COMPLETED"] . "</td>";
 				echo "<td>" . $row["PLAYER_ID"] . "</td>";
 				echo "<td>" . $row["CHAR_ID"] . "</td></tr>";
 				//echo $row[0];

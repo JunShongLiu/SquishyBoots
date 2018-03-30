@@ -15,14 +15,15 @@
 
 
 <form action="login.php" method="post">
+<div class="container" style="width: 50vh">
 <div class="text-center">
  <h1>Create New Account</h1><br/>
 
  <span class="input"></span>
- <input type="text" name="username" placeholder="Username" title="username" autocomplete="off" required />
+ <input type="text" class="form-control" name="username" placeholder="Username" title="username" autocomplete="off" required />
  <br>
  <span class="input"></span> 
- <input type="email" name="email" placeholder="Email address" required />
+ <input type="email" class="form-control" name="email" placeholder="Email address" required />
  <br>
  <button type="submit" value="Sign Up" title="Submit form" class="btn btn-primary" name="registerform"><span>Register</span></button>
 
@@ -34,7 +35,7 @@
 <form action = "login.php">
 <button type="submit" class="btn btn-primary"> Back to Login</button>
 </div>
-</form>
+</form> </div>
 
 
 </body>

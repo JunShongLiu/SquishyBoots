@@ -32,7 +32,7 @@ This is the login screen
 	<br>
 	<br>
 
-	<div class="container" style="height: 100vh">
+	<div class="container" style="width: 100vh">
         <div class="text-center">
                         <form action="login.php" method="GET" autocomplete="off">
                         	Email
