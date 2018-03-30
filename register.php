@@ -14,7 +14,7 @@
 <body background="pix/bg1.jpg">
 
 
-<form action="login.php" method="post">
+<form action="register.php" method="post">
 <div class="container" style="width: 50vh">
 <div class="text-center">
  <h1>Create New Account</h1><br/>
@@ -37,7 +37,6 @@
 </div>
 </form> </div>
 
-
 </body>
 </html>
 
@@ -45,10 +44,8 @@
 include("db_execute.php");
 
 $success = True; //keep track of errors so it redirects the page only if there are no errors
-$db_conn = oci_connect("ora_s4i0b", "a31112148", "dbhost.ugrad.cs.ubc.ca:1522/ug");
-
+$db_conn = oci_connect("ora_y0w0b", "a21529145", "dbhost.ugrad.cs.ubc.ca:1522/ug");
 if ($db_conn){
-
    if (array_key_exists("registerform", $_POST)){
     
        $tuple = array (
@@ -60,11 +57,40 @@ if ($db_conn){
        $alltuples = array (
            $tuple
        ); 
+
+       $cmdstr = "insert into Player values (:bind1, :bind2, :bind3)";
+       $statement = OCIParse($db_conn, $cmdstr);
+       
+           if (!$statement) {
+               echo "<br>Cannot parse the following command: " . $cmdstr . "<br>";
+               $e = OCI_Error($db_conn);
+               echo htmlentities($e['message']);
+               $success = False;
+           }
+       
+           foreach ($alltuples as $tuple) {
+               foreach ($tuple as $bind => $val) {
+                   //echo $val;
+                   //echo "<br>".$bind."<br>";
+                   OCIBindByName($statement, $bind, $val);
+                   unset ($val); //make sure you do not remove this. Otherwise $val will remain in an array object wrapper which will not be recognized by Oracle as a proper datatype
+       
+               }
+               $r = OCIExecute($statement, OCI_DEFAULT);
+               OCICommit($db_conn);               
+               if (!$r) {
+                   echo "Account Registry Unsuccessful.";                
+                   echo "<br>Cannot execute the following command: " . $cmdstr . "<br>";
+                   $e = OCI_Error($statement); // For OCIExecute errors pass the statementhandle
+                   echo htmlentities($e['message']);
+                   echo "<br>";
+                   $success = False;
+               }
+               else{
+                    header("location: login.php");                
+               }
+           }
            
-       executeBoundSQL("insert into Player values (:bind1, :bind2, :bind3)", $alltuples);
-       echo "account successfully created!"; 
-       OCICommit($db_conn);
-       header("location: register.php");     
    }
 }
 ?>

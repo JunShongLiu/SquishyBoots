@@ -39,7 +39,7 @@
 <p>Update a character level</p>
 <form action="update_query.php" method="POST" id="update" autocomplete="off">
 <input type="number" min="1" class="form-control" name="char_id" placeholder="Enter Character ID" width="5">
-<input type="number" min="1" class="form-control" name="char_level" placeholder="Enter New Character Level" width="5">
+<input type="number" class="form-control" name="char_level" placeholder="Enter New Character Level" width="5">
 <input type="submit" value="Execute Query" class="btn btn-primary" name="update">
 </form>
 

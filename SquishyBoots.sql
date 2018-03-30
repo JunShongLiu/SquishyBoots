@@ -13,7 +13,7 @@ drop table Item;
 
 CREATE TABLE Player (
     Username     varchar(80) UNIQUE,
-    Email        varchar(80),
+    Email        varchar(80) UNIQUE,
     Player_ID    int,
     PRIMARY KEY(Player_ID),
 	CONSTRAINT CHK_PID CHECK (Player_ID > 0)
