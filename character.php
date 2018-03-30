@@ -24,7 +24,7 @@
     </ul>
     <div style = 'float:right;'>
     <form action="character.php" method="POST" id="Logout" class ="navbar-nav">
-<input type="submit" value="Log Out" class="btn btn-primary" name="logout"></div>
+<input type="submit" value="Log Out" class="btn btn-primary" name="logout"></form></div>
   </div>
 </nav>
 
