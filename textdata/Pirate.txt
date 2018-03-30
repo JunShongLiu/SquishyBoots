@@ -1,0 +1,5 @@
+<option>Cannoneer</option>
+<option>Mechanic</option>
+<option>Angelic Buster</option>
+<option>Shade</option>
+<option>Thunder Breaker</option>

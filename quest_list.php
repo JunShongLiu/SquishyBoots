@@ -22,6 +22,9 @@
     <ul class="nav navbar-nav">
       <li><a href="http://www.ugrad.cs.ubc.ca/~s4i0b/SquishyBoots/user.php">Character Page</a></li>
     </ul>
+		<div style = 'float:right;'>
+    <form action="user.php" method="POST" id="Logout" class ="navbar-nav">
+<input type="submit" value="Log Out" class="btn btn-primary" name="logout"></div>
   </div>
 </nav>
 
@@ -52,6 +55,11 @@ if ($db_conn) {
 		echo "</tr>";
 	}
 	echo "</table>";
+
+	if (array_key_exists("logout", $_POST)){
+		session_destroy();
+		header("location: login.php");
+	}
 
 }
 

@@ -22,6 +22,9 @@
     <ul class="nav navbar-nav">
       <li><a href="http://www.ugrad.cs.ubc.ca/~s4i0b/SquishyBoots/user.php">Character Page</a></li>
     </ul>
+	<div style = 'float:right;'>
+    <form action="user.php" method="POST" id="Logout" class ="navbar-nav">
+<input type="submit" value="Log Out" class="btn btn-primary" name="logout"></div>
   </div>
 </nav>
 <div class="text-center">
@@ -92,6 +95,9 @@ $db_conn = OCILogon("ora_s4i0b", "a31112148", "dbhost.ugrad.cs.ubc.ca:1522/ug");
 			executeBoundSQL("insert into Completes values (:bind1, :bind2)", $alltuples);
 			OCICommit($db_conn);
 			header("location: quest_list.php");
+		}else if (array_key_exists("logout", $_POST)){
+			session_destroy();
+			header("location: login.php");
 		}
 	}
 

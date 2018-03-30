@@ -12,6 +12,12 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script> $(function() {
+		$("#text-one").change(function() {
+		    $("#text-two").load("textdata/" + $(this).val() + ".txt");
+		    $("#text-three").load("textdata/" + $(this).val() + ".txt");
+	   	});
+	   });</script>
 </head>
 <body background="pix/bg1.jpg">
 
@@ -24,33 +30,73 @@
     <ul class="nav navbar-nav">
       <li><a href="http://www.ugrad.cs.ubc.ca/~s4i0b/SquishyBoots/user.php">Character Page</a></li>
     </ul>
+	<div style = 'float:right;'>
+    <form action="user.php" method="POST" id="Logout" class ="navbar-nav">
+<input type="submit" value="Log Out" class="btn btn-primary" name="logout"></div>
+</form> </div>
+
   </div>
 </nav>
 
+
 <form action="user.php" method="POST" id="CreateHero">
-    Character Name: <input type="text" name="charname" maxlength="20" required><br>
-    Job: <input type="text" name="job" required><br>
-<select name="class" multiple>
-<option value="magician">magician</option>
-<option value="bowman">bowman</option>
-<option value="pirate">pirate</option>
-<option value="thief">thief</option>
-<option value="warrior">warrior</option>
+
+    Character Name: <input type="text" name="charname" maxlength="20" pattern="[:*,*(*)*!*@*.*a-zA-Z0-9 ]+" required><br>
+    <div class="col-xs-3">
+Class: 
+<select name="table" class="form-control" id="text-one" required>
+<option value="">Please Select</option>
+<option value="Magician">Magician</option>
+<option value="Bowman">Bowman</option>
+<option value="Pirate">Pirate</option>
+<option value="Thief">Thief</option>
+<option value="Warrior">Warrior</option>
 </select> 
+Job: 
+<select name="job" class="form-control" size="6" id="text-two" required><option>Please choose from above</option></select><br>
+</select> 
+
 <br> 
-<input type="submit" value="Create Hero" class="btn btn-primary" name="createhero">
-    </form>
+
+<input type="submit"  value="Create Hero" class="btn btn-primary" name="createhero">
+</form>
 
 
+<br> 
+<br> 
+<br> 
+<br>
 
-    <form action="user.php" method="POST" id="DeleteHero">
-    Character ID: <input type="number" min="0" name="Char_ID" maxlength="20"><br>
-    <input type="submit" value="Delete Hero" class="btn btn-primary" name="deletehero">
-    </form> 
+<form action="user.php" method="POST" id="DeleteHero">
+Character ID: <input type="number" class="form-control"  min= "1" name="Char_ID" maxlength="20" required><br>
+<input type="submit" value="Delete Hero" class="btn btn-primary" name="deletehero">
+</form></div>
+<br> 
+<br> 
+<br> 
+<br> 
 
-</body>
+<br> 
+<br> 
+<br> 
+<br> 
+<br> 
+<br> 
+<br> 
+<br> 
+<br> 
 
-</html>
+<br> 
+<br> 
+<br> 
+<br> 
+
+
+<br> 
+<br> 
+<br> 
+<br> 
+<br> 
 
 <?php
 include("db_execute.php");
@@ -85,29 +131,24 @@ if ($db_conn) {
 
 	if (array_key_exists("createhero", $_POST)){
 
+		$charID = rand(15, 1000);   // number of total characters +1  change** 
+		$charname = $_POST['charname'];
+		$job = $_POST['job'];
+		$class = $_POST['table'];
+		$playerID = $_SESSION['Player_ID'];
+		$hp = 100;
+		$mp = 100;
+		$quests = 1;
+		$level = 10;
 
-            $tuple = array (
-                ":charID" => 16,   // number of total characters +1  change** 
-				":charname" => $_POST['charname'],
-				":job" => $_POST['job'],
-				":class" => $_POST['class'],
-				":playerID" => $_SESSION['Player_ID'],
-				":hp" => 100,
-				":mp" => 100,
-				":quests" => 0,
-				":level" => 10
-				
-            );
-            $alltuples = array (
-                $tuple
-            ); 
-				executeBoundSQL("insert into Hero values(:class, :job, :quests, :playerID, :charID)", $alltuples);
- 		        executeBoundSQL("insert into Characters values(:hp, :mp, :charname, :level, :charID)", $alltuples);
-		        OCICommit($db_conn);
+		$charquery = "insert into Characters values($hp, $mp, '$charname', $level, $charID)";
+		executePlainSQL($charquery);
+		OCICommit($db_conn);
+		$heroquery = "insert into Hero values('$class', '$job', $quests, $playerID, $charID)";
+		executePlainSQL($heroquery);
+		OCICommit($db_conn);
+		header("location: user.php");
 
-				if ($_POST && $success){
-					header("location: user.php");
-				}
 		}
 
 	else if (array_key_exists("deletehero", $_POST)){
@@ -125,8 +166,16 @@ if ($db_conn) {
             executeBoundSQL("delete from Characters where Char_id = :bind1", $alltuples);
             OCICommit($db_conn);
             header("location: user.php");
-        } 
-	}	
+		}
+		
+	}else if (array_key_exists("logout", $_POST)){
+		session_destroy();
+		header("location: login.php");
+	}
 }
 
 ?> 
+
+</body>
+
+</html>

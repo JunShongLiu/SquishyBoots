@@ -22,12 +22,17 @@
     <ul class="nav navbar-nav">
       <li><a href="http://www.ugrad.cs.ubc.ca/~s4i0b/SquishyBoots/character.php">Character Details</a></li>
     </ul>
+    <div style = 'float:right;'>
+    <form action="user.php" method="POST" id="Logout" class ="navbar-nav">
+<input type="submit" value="Log Out" class="btn btn-primary" name="logout"></div>
   </div>
 </nav>
 
 <div class="container-fluid">
   <h2>Aggregation Screen</h2>
 </div>
+
+
 
 
 <p><h4>Find Statistics About Your Character's Items</h4></p>
@@ -46,6 +51,9 @@
 <form action="character.php" method="GET" id="SumAggregationForm">
 <input type="submit" value="Total Value" class="btn btn-primary" name="sumAggregation">
 </form>
+
+
+
 
 <?php
 include("db_execute.php");
@@ -110,11 +118,16 @@ if ($db_conn) {
             echo "<td>" . $row['HP'] . "</td>";
             echo "<td>" . $row['MP'] . "</td>";
             echo "<td>" . $row['HERO_CLASS'] . "</td>";
+            $class = $row['HERO_CLASS'];
             echo "<td>" . $row['JOB'] . "</td>";
             echo "<td>" . $row['QUESTS_COMPLETED'] . "</td>";
             echo "<td> <a href='quest_list.php'> Quest Details</a></td>";
             echo "</tr>";
         }
+
+$classImage = "pix/" . $class . ".jpg";
+echo "<img src=$classImage>";
+
         echo "</table>";
         $itemsResult = executePlainSQL("SELECT I.Item_ID, I.I_Name, I.I_Type, I.I_Level, I.I_Value FROM Item I, Carries C, Hero H, Player P WHERE I.Item_ID = C.Item_ID AND C.Char_ID = H.Char_ID AND H.Player_ID = P.Player_ID AND P.Player_ID = $player_id AND H.Char_ID = $char_id");
         OCICommit($db_conn);
@@ -156,7 +169,13 @@ if ($db_conn) {
             OCICommit($db_conn);
             header("location: character.php");
         }
+        else if (array_key_exists("logout", $_POST)){
+		    session_destroy();
+		    header("location: login.php");
+	    }
     }
+
+
 ?>
         
 </body>

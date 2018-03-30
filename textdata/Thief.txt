@@ -1,0 +1,6 @@
+<option>Dual Blader</option>
+<option>Phantom</option>
+<option>Night Walker</option>
+<option>Cadena</option>
+<option>Xenon</option>
+<option>Thief</option>

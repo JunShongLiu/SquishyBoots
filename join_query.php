@@ -5,7 +5,6 @@ This is the analysis screen
 <?php
 	ini_set('session.save_path', './');
 	session_start();
-	echo session_id();
 ?>
 
 <!DOCTYPE html>

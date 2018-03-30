@@ -1,0 +1,6 @@
+<option>Blaze Wizard</option>
+<option>Battle Mage</option>
+<option>Luminous</option>
+<option>Kanna</option>
+<option>Beast Tamer</option>
+<option>Evan</option>
